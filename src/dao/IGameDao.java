@@ -5,6 +5,11 @@ import java.util.List;
 import server.command.Command;
 import shared.gameModel.GameModel;
 
+/**
+ * Interface to the Game Data Access objects
+ * @author Ife's Group
+ *
+ */
 public interface IGameDao {
 
 	public void addGame(GameModel game);

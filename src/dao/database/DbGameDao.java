@@ -18,6 +18,11 @@ import server.command.Command;
 import shared.gameModel.GameModel;
 import dao.IGameDao;
 
+/**
+ * concrete implementation of the Game DAO for using a DB
+ * @author Ife's Group
+ *
+ */
 public class DbGameDao implements IGameDao {
 
 	private DbAbstractFactory db;
