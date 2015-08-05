@@ -1,5 +1,7 @@
 package shared.gameModel;
 
+import java.io.Serializable;
+
 import shared.locations.VertexLocation;
 
 /**
@@ -7,8 +9,12 @@ import shared.locations.VertexLocation;
  * @author Ife's group
  *
  */
-public class VertexObject {
+public class VertexObject implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3200501709550825184L;
 	private int owner;
 	private VertexLocation location;
 	

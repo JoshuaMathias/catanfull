@@ -1,5 +1,7 @@
 package shared.gameModel;
 
+import java.io.Serializable;
+
 import shared.definitions.PortType;
 import shared.locations.EdgeDirection;
 import shared.locations.HexLocation;
@@ -9,8 +11,12 @@ import shared.locations.HexLocation;
  * @author Ife's group
  *
  */
-public class Port {
+public class Port implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7382146039516734914L;
 	private PortType resource;
 	private HexLocation location;
 	private EdgeDirection direction;

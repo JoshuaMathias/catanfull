@@ -1,11 +1,18 @@
 package shared.gameModel;
+
+import java.io.Serializable;
+
 /**
  * This class represents a message line.
  * @author Ife's group
  *
  */
-public class MessageLine {
+public class MessageLine implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2339467380520161482L;
 	private String message;
 	private String source;
 	

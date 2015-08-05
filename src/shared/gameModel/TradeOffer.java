@@ -1,11 +1,18 @@
 package shared.gameModel;
+
+import java.io.Serializable;
+
 /**
  * This class represents a trade offer.
  * @author Ife's group
  *
  */
-public class TradeOffer {
+public class TradeOffer implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4768078784481583390L;
 	private int sender = -1;
 	private int receiver = -1;
 	private ResourceList offer;

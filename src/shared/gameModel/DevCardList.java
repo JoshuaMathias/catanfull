@@ -1,5 +1,7 @@
 package shared.gameModel;
 
+import java.io.Serializable;
+
 import client.facade.ClientFacade;
 import shared.definitions.DevCardType;
 
@@ -8,8 +10,12 @@ import shared.definitions.DevCardType;
  * @author Ife's group
  *
  */
-public class DevCardList {
+public class DevCardList implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2673618389327642887L;
 	private int monopoly = 0;
 	private int monument = 0;
 	private int roadBuilding = 0;

@@ -1,6 +1,8 @@
 package shared.locations;
 
-public enum VertexDirection
+import java.io.Serializable;
+
+public enum VertexDirection implements Serializable
 {
 	W, NW, NE, E, SE, SW;
 	

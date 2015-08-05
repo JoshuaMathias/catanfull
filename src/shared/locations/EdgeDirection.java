@@ -1,6 +1,8 @@
 package shared.locations;
 
-public enum EdgeDirection
+import java.io.Serializable;
+
+public enum EdgeDirection implements Serializable
 {
 	
 	NW, N, NE, SE, S, SW;

@@ -1,5 +1,6 @@
 package shared.gameModel;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import shared.definitions.DevCardType;
@@ -16,7 +17,11 @@ import shared.locations.VertexLocation;
  * @author Ife's Group
  *
  */
-public class GameModel {
+public class GameModel implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2329752229474268973L;
 	private String gameName;
 	private int gameID;
 	private DevCardList deck = new DevCardList(true);
