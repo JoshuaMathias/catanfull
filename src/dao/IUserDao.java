@@ -11,8 +11,16 @@ import server.User;
  */
 public interface IUserDao {
 	
+	/**
+	 * Adds user to storage
+	 * @param user
+	 */
 	public void addUser(User user);
 	
+	/**
+	 * retrieves all users from storage
+	 * @return List of users
+	 */
 	public List<User> getAllUsers();
 	
 }
