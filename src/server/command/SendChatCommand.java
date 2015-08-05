@@ -1,5 +1,6 @@
 package server.command;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import shared.gameModel.GameModel;
@@ -12,8 +13,12 @@ import shared.gameModel.Player;
  * @author Ife's Group
  *
  */
-public class SendChatCommand implements Command {
+public class SendChatCommand implements Command, Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8149568725648502070L;
 	private GameModel serverModel;
 	private String message;
 	private int playerIndex;

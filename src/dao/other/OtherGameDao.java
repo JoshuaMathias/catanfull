@@ -6,6 +6,11 @@ import server.command.Command;
 import shared.gameModel.GameModel;
 import dao.IGameDao;
 
+/**
+ * concrete implementation of the Game DAO for using a File 
+ * @author Ife's Group
+ *
+ */
 public class OtherGameDao implements IGameDao {
 
 	@Override

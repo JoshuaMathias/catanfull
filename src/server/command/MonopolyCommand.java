@@ -1,5 +1,6 @@
 package server.command;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import shared.definitions.ResourceType;
@@ -9,8 +10,12 @@ import shared.gameModel.MessageLine;
 import shared.gameModel.Player;
 import shared.gameModel.ResourceList;
 
-public class MonopolyCommand implements Command {
+public class MonopolyCommand implements Command, Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 891345239559347169L;
 	private int playerIndex;
 	private ResourceType resource;
 	private GameModel serverModel;

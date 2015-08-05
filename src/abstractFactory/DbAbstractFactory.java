@@ -9,6 +9,11 @@ import dao.database.DbGameDao;
 import dao.database.DbUserDao;
 import database.ApacheImporter;
 
+/**
+ * concrete implementation of the DB Factory
+ * @author Ife's Group
+ *
+ */
 public class DbAbstractFactory implements IAbstractFactory {
 
 	private static final String DATABASE_FILE = "CatanDB.sqlite";

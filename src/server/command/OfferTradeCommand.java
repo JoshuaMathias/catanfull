@@ -1,5 +1,7 @@
 package server.command;
 
+import java.io.Serializable;
+
 import shared.gameModel.GameModel;
 import shared.gameModel.MessageLine;
 import shared.gameModel.Player;
@@ -11,8 +13,12 @@ import shared.gameModel.TradeOffer;
  * @author Ife's Group
  *
  */
-public class OfferTradeCommand implements Command {
+public class OfferTradeCommand implements Command, Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3880103328620981406L;
 	int sender;
 	ResourceList offer;
 	int receiver;

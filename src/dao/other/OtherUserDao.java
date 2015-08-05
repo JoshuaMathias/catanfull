@@ -5,6 +5,11 @@ import java.util.List;
 import server.User;
 import dao.IUserDao;
 
+/**
+ * concrete implementation of the User DAO for using a File
+ * @author Ife's Group
+ *
+ */
 public class OtherUserDao implements IUserDao {
 
 	@Override

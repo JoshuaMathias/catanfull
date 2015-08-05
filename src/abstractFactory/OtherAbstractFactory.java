@@ -5,6 +5,11 @@ import dao.IUserDao;
 import dao.other.OtherGameDao;
 import dao.other.OtherUserDao;
 
+/**
+ * concrete implementation of another persistent storage factory (File)
+ * @author Ife's Group
+ *
+ */
 public class OtherAbstractFactory implements IAbstractFactory {
 
 	private IUserDao userDao = new OtherUserDao();

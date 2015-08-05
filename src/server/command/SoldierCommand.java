@@ -1,5 +1,7 @@
 package server.command;
 
+import java.io.Serializable;
+
 import shared.gameModel.DevCardList;
 import shared.gameModel.GameModel;
 import shared.gameModel.MessageLine;
@@ -11,8 +13,12 @@ import shared.locations.HexLocation;
  * @author Ife's Group
  *
  */
-public class SoldierCommand implements Command {
+public class SoldierCommand implements Command, Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1002301330706263584L;
 	int playerIndex;
 	int victimIndex;
 	HexLocation location;

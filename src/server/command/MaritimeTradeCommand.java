@@ -1,5 +1,7 @@
 package server.command;
 
+import java.io.Serializable;
+
 import shared.definitions.ResourceType;
 import shared.gameModel.GameModel;
 import shared.gameModel.MessageLine;
@@ -11,8 +13,12 @@ import shared.gameModel.ResourceList;
  * @author Ife's Group
  *
  */
-public class MaritimeTradeCommand implements Command {
+public class MaritimeTradeCommand implements Command, Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -678453708731838256L;
 	private int playerIndex; 
 	private int ratio;
 	private ResourceType inputResource;

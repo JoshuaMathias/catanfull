@@ -11,6 +11,12 @@ import abstractFactory.DbAbstractFactory;
 import server.User;
 import dao.IUserDao;
 
+
+/**
+ * concrete implementation of the User DAO for using a DB
+ * @author Ife's Group
+ *
+ */
 public class DbUserDao implements IUserDao {
 	
 	private DbAbstractFactory db;

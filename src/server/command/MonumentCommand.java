@@ -1,5 +1,7 @@
 package server.command;
 
+import java.io.Serializable;
+
 import shared.gameModel.DevCardList;
 import shared.gameModel.GameModel;
 import shared.gameModel.MessageLine;
@@ -10,8 +12,12 @@ import shared.gameModel.Player;
  * @author Ife's Group
  *
  */
-public class MonumentCommand implements Command {
+public class MonumentCommand implements Command, Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8419614526957462622L;
 	private Player player;
 	private GameModel serverModel;
 	
