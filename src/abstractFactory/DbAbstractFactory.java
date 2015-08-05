@@ -11,7 +11,7 @@ import database.ApacheImporter;
 
 public class DbAbstractFactory implements IAbstractFactory {
 
-	private static final String DATABASE_FILE = "RecordIndexer.sqlite";
+	private static final String DATABASE_FILE = "CatanDB.sqlite";
 	private static final String DATABASE_URL = "jdbc:sqlite:"+ DATABASE_FILE;
 	
 	private IGameDao gameDao = new DbGameDao(this);

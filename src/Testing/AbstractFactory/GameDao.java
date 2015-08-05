@@ -3,6 +3,7 @@ package Testing.AbstractFactory;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
@@ -24,7 +25,7 @@ import shared.locations.HexLocation;
 import shared.locations.VertexDirection;
 import shared.locations.VertexLocation;
 
-public class UserDao {
+public class GameDao {
 
 	private IServerFacade serverFacade;
 	private Player paul = new Player();
@@ -110,5 +111,22 @@ public class UserDao {
 		IAbstractFactory abstractFactory = new DbAbstractFactory();
 		IUserDao userDao= abstractFactory.getUserDao();
 		IGameDao gameDao = abstractFactory.getGameDao();
+		 
+		abstractFactory.erase();
+		abstractFactory.startTransaction();
+		gameDao.addGame(game);
+		List<GameModel> games = gameDao.getAllGames();
+		
+		System.out.println(games.size());
+		
+		assertTrue(games.size() > 0);
+		
+		GameModel retrievedGame = games.get(0);
+		
+		List<Player> players = retrievedGame.getPlayers();
+		
+		System.out.println(players.toString());
+		
+		abstractFactory.endTransaction(true);
 	}
 }

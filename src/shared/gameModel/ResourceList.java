@@ -1,5 +1,7 @@
 package shared.gameModel;
 
+import java.io.Serializable;
+
 import shared.definitions.ResourceType;
 
 /**
@@ -7,8 +9,12 @@ import shared.definitions.ResourceType;
  * @author Ife's group
  *
  */
-public class ResourceList {
+public class ResourceList implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6969912954891422072L;
 	private int brick;
 	private int ore;
 	private int sheep;

@@ -1,5 +1,10 @@
 package dao.database;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,7 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import abstractFactory.DbAbstractFactory;
-import server.User;
 import server.command.Command;
 import shared.gameModel.GameModel;
 import dao.IGameDao;
@@ -33,13 +37,18 @@ public class DbGameDao implements IGameDao {
 			String sql = "insert into Game " + "( gameModel)" + "values ( ?);";
 			stmt = connection.prepareStatement(sql);
 			
-			stmt.setObject(1, game);
+			ByteArrayOutputStream b = new ByteArrayOutputStream();
+	        ObjectOutputStream o = new ObjectOutputStream(b);
+			o.writeObject(game);
+			byte[] gameBytes = b.toByteArray();
+			
+			stmt.setBytes(1, gameBytes);
 			
 			if(stmt.executeUpdate() == 1) {
 				
 				System.out.println("Inserted game correctly");
 				Statement keyStmt = connection.createStatement();
-				keyRS = keyStmt.executeQuery(sql);
+				keyRS = keyStmt.executeQuery("select last_insert_rowid()");
 				keyRS.next();
 				int id = keyRS.getInt(1);
 				game.setPrimaryKey(id);
@@ -50,6 +59,9 @@ public class DbGameDao implements IGameDao {
 			
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		finally {
@@ -74,7 +86,7 @@ public class DbGameDao implements IGameDao {
 		ArrayList<GameModel> games = new ArrayList<>();
 		
 		try {
-			String sql = "select primaryKey, gameModel from Game";
+			String sql = "select id, gameModel from Game";
 			stmt = connection.prepareStatement(sql);
 			
 			rs = stmt.executeQuery();
@@ -82,7 +94,15 @@ public class DbGameDao implements IGameDao {
 			while(rs.next()) {
 				
 				int primaryKey = rs.getInt(1);
-				GameModel game = (GameModel)rs.getObject(2);
+				
+				System.out.println("Primary Key is: " + primaryKey);
+				
+				byte[] buf = rs.getBytes(2);
+				ObjectInputStream objectIn = null;
+				if (buf != null)
+					objectIn = new ObjectInputStream(new ByteArrayInputStream(buf));
+
+				GameModel game = (GameModel)objectIn.readObject();
 				
 				game.setPrimaryKey(primaryKey);
 				games.add(game);
@@ -90,6 +110,13 @@ public class DbGameDao implements IGameDao {
 			
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
+			e.printStackTrace();
+		} 
+		catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		finally {
@@ -172,7 +199,13 @@ public class DbGameDao implements IGameDao {
 			stmt = connection.prepareStatement(sql);
 			
 			stmt.setInt(1, key);
-			stmt.setObject(2, command);
+			
+			ByteArrayOutputStream b = new ByteArrayOutputStream();
+	        ObjectOutputStream o = new ObjectOutputStream(b);
+			o.writeObject(command);
+			byte[] commandBytes = b.toByteArray();
+			
+			stmt.setBytes(2, commandBytes);
 			
 			
 			if(stmt.executeUpdate() == 1) {
@@ -185,6 +218,9 @@ public class DbGameDao implements IGameDao {
 			
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		finally {
@@ -204,21 +240,30 @@ public class DbGameDao implements IGameDao {
 			String sql = "select command from Command where gameID = ?";
 			stmt = connection.prepareStatement(sql);
 			
-			rs = stmt.executeQuery();
-			
 			stmt.setInt(1, gameID);
 			
 			rs = stmt.executeQuery();
 			
-			Command command = null;
 			while(rs.next()) {
 				
-				command =(Command) rs.getObject(1);
+				byte[] buf = rs.getBytes(1);
+				ObjectInputStream objectIn = null;
+				if (buf != null)
+					objectIn = new ObjectInputStream(new ByteArrayInputStream(buf));
+
+				Command command = (Command)objectIn.readObject();
+				
 				commands.add(command);
 			}
 			
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		finally {

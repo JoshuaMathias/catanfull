@@ -1,5 +1,7 @@
 package shared.gameModel;
 
+import java.io.Serializable;
+
 import shared.definitions.HexType;
 import shared.locations.HexLocation;
 
@@ -8,8 +10,12 @@ import shared.locations.HexLocation;
  * @author Ife's group
  *
  */
-public class Hex {
+public class Hex implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6007065938244190550L;
 	private HexLocation location;
 	private HexType resource;
 	private int number;

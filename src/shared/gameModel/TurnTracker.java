@@ -1,11 +1,18 @@
 package shared.gameModel;
+
+import java.io.Serializable;
+
 /**
  * This class is for keeping track of the turns.
  * @author Ife's group
  *
  */
-public class TurnTracker {
+public class TurnTracker implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3799883634231591208L;
 	private int currentTurn = 0; //playerIndex of who's turn it is
 	private String status = "FirstRound";
 	private int longestRoad = -1;

@@ -1,5 +1,7 @@
 package shared.gameModel;
 
+import java.io.Serializable;
+
 import shared.locations.EdgeLocation;
 
 /**
@@ -7,8 +9,12 @@ import shared.locations.EdgeLocation;
  * @author Ife's group
  *
  */
-public class Road {
+public class Road implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2770536135040672315L;
 	private int owner;
 	private EdgeLocation location;
 	

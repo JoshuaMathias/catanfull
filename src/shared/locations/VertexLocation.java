@@ -1,11 +1,17 @@
 package shared.locations;
 
+import java.io.Serializable;
+
 /**
  * Represents the location of a vertex on a hex map
  */
-public class VertexLocation
+public class VertexLocation implements Serializable
 {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5508514665446025514L;
 	private HexLocation hexLoc;
 	private int x;//x and y are only here for json conversion compatability
 	private int y;

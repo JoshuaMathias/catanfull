@@ -1,13 +1,18 @@
 package shared.gameModel;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 /**
  * This class represents a list of messages.
  * @author Ife's group
  *
  */
-public class MessageList {
+public class MessageList implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7482665791392735704L;
 	private ArrayList<MessageLine> lines = new ArrayList<>();
 
 	public ArrayList<MessageLine> getLines() {

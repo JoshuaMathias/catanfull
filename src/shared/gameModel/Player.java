@@ -1,5 +1,7 @@
 package shared.gameModel;
 
+import java.io.Serializable;
+
 import shared.definitions.CatanColor;
 import shared.definitions.DevCardType;
 
@@ -8,8 +10,12 @@ import shared.definitions.DevCardType;
  * @author Ife's group
  *
  */
-public class Player {
+public class Player implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8998666108736670620L;
 	private int cities = 4;
 	private CatanColor color;
 	private boolean discarded = false;

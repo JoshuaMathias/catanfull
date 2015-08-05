@@ -1,5 +1,6 @@
 package shared.gameModel;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
@@ -15,8 +16,12 @@ import shared.locations.VertexLocation;
  * @author Ife's group
  *
  */
-public class Map {
+public class Map implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1360744968578963595L;
 	private ArrayList<Hex> hexes = new ArrayList<>();
 	private ArrayList<Port> ports = new ArrayList<>();
 	private ArrayList<Road> roads = new ArrayList<>();
