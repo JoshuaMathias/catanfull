@@ -1,5 +1,6 @@
 package server.command;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -17,8 +18,12 @@ import shared.gameModel.ResourceList;
  * @author Ifes Group
  *
  */
-public class BuyDevCardCommand implements Command {
+public class BuyDevCardCommand implements Command, Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7066799747480305706L;
 	int playerIndex;
 	GameModel serverModel;
 	

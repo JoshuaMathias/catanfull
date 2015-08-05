@@ -1,5 +1,7 @@
 package server.command;
 
+import java.io.Serializable;
+
 import shared.gameModel.DevCardList;
 import shared.gameModel.GameModel;
 import shared.gameModel.MessageLine;
@@ -12,8 +14,12 @@ import shared.locations.EdgeLocation;
  * @author Ife's Group
  *
  */
-public class RoadBuildingCommand implements Command {
+public class RoadBuildingCommand implements Command, Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4460468594336446763L;
 	private int sender;
 	private EdgeLocation spot1;
 	private EdgeLocation spot2;

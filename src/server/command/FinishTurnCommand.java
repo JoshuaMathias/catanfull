@@ -1,5 +1,6 @@
 package server.command;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import shared.gameModel.DevCardList;
@@ -13,8 +14,12 @@ import shared.gameModel.TurnTracker;
  * @author Ife's Group
  *
  */
-public class FinishTurnCommand implements Command {
+public class FinishTurnCommand implements Command, Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8888817633160407013L;
 	private GameModel serverModel;
 	
 	public FinishTurnCommand(GameModel serverModel){

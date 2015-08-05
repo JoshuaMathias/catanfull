@@ -1,5 +1,7 @@
 package server.command;
 
+import java.io.Serializable;
+
 import shared.definitions.CatanColor;
 import shared.gameModel.GameModel;
 import shared.gameModel.Player;
@@ -9,8 +11,12 @@ import shared.gameModel.Player;
  * @author Ife's Group
  *
  */
-public class JoinGameCommand implements Command {
+public class JoinGameCommand implements Command, Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3540431475253346304L;
 	private CatanColor color;
 	private String username;
 	private int playerID;

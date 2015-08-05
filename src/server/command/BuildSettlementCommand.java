@@ -1,5 +1,6 @@
 package server.command;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import server.facade.ServerFacade;
@@ -21,8 +22,12 @@ import shared.locations.VertexLocation;
  * @author Ife's Group
  *
  */
-public class BuildSettlementCommand implements Command {
+public class BuildSettlementCommand implements Command, Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7384342653722445582L;
 	int playerIndex;
 	VertexLocation vertexLocation;
 	boolean free;

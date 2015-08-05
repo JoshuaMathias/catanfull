@@ -1,5 +1,6 @@
 package server.command;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
@@ -16,8 +17,12 @@ import shared.locations.HexLocation;
  * @author Ife's Group
  * 
  */
-public class RobPlayerCommand implements Command {
+public class RobPlayerCommand implements Command, Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7454001069108204735L;
 	private int playerIndex;
 	private int victimIndex;
 	private HexLocation robber;

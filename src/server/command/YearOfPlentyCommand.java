@@ -1,5 +1,6 @@
 package server.command;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import shared.definitions.ResourceType;
@@ -14,8 +15,12 @@ import shared.gameModel.ResourceList;
  * @author Ife's Group
  *
  */
-public class YearOfPlentyCommand implements Command {
+public class YearOfPlentyCommand implements Command, Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8203427744840950814L;
 	private int playerIndex;
 	private ResourceType cardOne;
 	private ResourceType cardTwo;

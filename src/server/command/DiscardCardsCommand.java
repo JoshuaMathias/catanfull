@@ -1,5 +1,6 @@
 package server.command;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import shared.gameModel.GameModel;
@@ -12,8 +13,12 @@ import shared.gameModel.ResourceList;
  * @author Ife's Group
  *
  */
-public class DiscardCardsCommand implements Command {
+public class DiscardCardsCommand implements Command, Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6370485199845730789L;
 	private int playerIndex;
 	private ResourceList discardedCards;
 	private GameModel serverModel;
