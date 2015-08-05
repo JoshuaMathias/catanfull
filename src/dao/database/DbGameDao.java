@@ -142,8 +142,16 @@ public class DbGameDao implements IGameDao {
 			String sql = "update Game set gameModel = ? where id = ?";
 			stmt = connection.prepareStatement(sql);
 			
-			stmt.setObject(1, game);
+			ByteArrayOutputStream b = new ByteArrayOutputStream();
+	        ObjectOutputStream o = new ObjectOutputStream(b);
+			o.writeObject(game);
+			byte[] gameBytes = b.toByteArray();
+			
+			stmt.setBytes(1, gameBytes);
+
 			stmt.setInt(2, game.getPrimaryKey());
+			
+			
 			
 			if(stmt.executeUpdate() != 1) {;
 				
@@ -152,6 +160,9 @@ public class DbGameDao implements IGameDao {
 			
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		finally {

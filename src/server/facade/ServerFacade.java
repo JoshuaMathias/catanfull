@@ -18,6 +18,8 @@ import client.data.GameInfo;
 import client.data.PlayerInfo;
 import client.serverproxy.GamesList;
 import client.data.*;
+import dao.IGameDao;
+import dao.IUserDao;
 import shared.definitions.CatanColor;
 import shared.definitions.DevCardType;
 import shared.definitions.PortType;
@@ -36,6 +38,9 @@ public class ServerFacade implements IServerFacade {
 	private static IServerFacade serverFacade;
 	private ArrayList<GameModel> gamesList = new ArrayList<>();
 	private ArrayList<User> users = new ArrayList<>();
+	private ArrayList< ArrayList<Command> > commands;
+	private IGameDao gameDao;
+	private IUserDao userDao;
 
 	private ServerFacade() {
 
@@ -667,5 +672,10 @@ public class ServerFacade implements IServerFacade {
 
 	public GameModel getGameModel(int gameId) {
 		return gamesList.get(gameId);
+	}
+	
+	public void incrementVersion(int gameId, Command command){
+		GameModel game = gamesList.get(gameId);
+		gameDao.addCommand(command, game.getPrimaryKey());
 	}
 }
