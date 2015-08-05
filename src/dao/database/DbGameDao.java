@@ -245,7 +245,7 @@ public class DbGameDao implements IGameDao {
 	}
 
 	@Override
-	public List<Command> getCommands(int gameID) {//Look at how to deserialize from the specs we found online
+	public List<Command> getCommands(int key) {//Look at how to deserialize from the specs we found online
 		
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
@@ -256,7 +256,7 @@ public class DbGameDao implements IGameDao {
 			String sql = "select command from Command where gameID = ?";
 			stmt = connection.prepareStatement(sql);
 			
-			stmt.setInt(1, gameID);
+			stmt.setInt(1, key);
 			
 			rs = stmt.executeQuery();
 			
@@ -286,6 +286,9 @@ public class DbGameDao implements IGameDao {
 			DbAbstractFactory.safeClose(stmt);
 			DbAbstractFactory.safeClose(rs);
 		} 
+		
+		removeCommands(key);
+		
 		return commands;
 	}
 

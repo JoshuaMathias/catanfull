@@ -39,11 +39,32 @@ public class ServerFacade implements IServerFacade {
 	private ArrayList<GameModel> gamesList = new ArrayList<>();
 	private ArrayList<User> users = new ArrayList<>();
 //	private ArrayList< ArrayList<Command> > commands;
+	private ArrayList<Integer> commandAmountPerGame = new ArrayList<>();
 	private IGameDao gameDao;
 	private IUserDao userDao;
+	
+	private int commandListLimit;
 
 	private ServerFacade() {
 		restore();
+	}
+	
+	private void restore() {
+		// TODO Auto-generated method stub
+//		Server.abstractFactory.startTransaction();
+		
+		gamesList = (ArrayList<GameModel>) gameDao.getAllGames();
+		
+		for(GameModel game: gamesList){
+			executeCommands(game);
+		}
+		
+//		Server.abstractFactory.endTransaction(true);
+	}
+
+	private void executeCommands(GameModel game) {
+		// TODO Auto-generated method stub
+		gameDao.getCommands(game.getPrimaryKey());
 	}
 
 	public static IServerFacade getSingleton() {
@@ -73,7 +94,7 @@ public class ServerFacade implements IServerFacade {
 //					serverModel.getTradeOffer())) {
 				Command command = new AcceptTradeCommand(playerIndex, willAccept, serverModel);
 				command.execute();
-				incrementVersion(serverModel, command);
+				incrementVersion(gameID, serverModel, command);
 				if (willAccept) {
 					return true;
 				}
@@ -102,7 +123,7 @@ public class ServerFacade implements IServerFacade {
 				vertexLocation))) {
 			Command command = new BuildCityCommand(playerIndex, vertexLocation, serverModel);
 			command.execute();
-			incrementVersion(serverModel, command);
+			incrementVersion(gameID, serverModel, command);
 			return true;
 		}
 
@@ -126,7 +147,7 @@ public class ServerFacade implements IServerFacade {
 		if (serverModel.canBuildRoad(new Road(playerIndex, roadLocation))) {
 			Command command = new BuildRoadCommand(playerIndex, roadLocation, free, serverModel);
 			command.execute();
-			incrementVersion(serverModel, command);
+			incrementVersion(gameID, serverModel, command);
 			return true;
 		}
 
@@ -152,7 +173,7 @@ public class ServerFacade implements IServerFacade {
 				vertexLocation.getNormalizedLocation()))) {
 			Command command = new BuildSettlementCommand(playerIndex, vertexLocation, free, serverModel);
 			command.execute();
-			incrementVersion(serverModel, command);
+			incrementVersion(gameID, serverModel, command);
 			return true;
 		}
 
@@ -172,7 +193,7 @@ public class ServerFacade implements IServerFacade {
 		if (serverModel.canBuyDevCard(playerIndex)) {
 			Command command = new BuyDevCardCommand(playerIndex, serverModel);
 			command.execute();
-			incrementVersion(serverModel, command);
+			incrementVersion(gameID, serverModel, command);
 			return true;
 		}
 		return false;
@@ -213,7 +234,7 @@ public class ServerFacade implements IServerFacade {
 		if (serverModel.mustDiscard(playerIndex)) {
 			Command command = new DiscardCardsCommand(playerIndex, discardedCards, serverModel);
 			command.execute();
-			incrementVersion(serverModel, command);
+			incrementVersion(gameID, serverModel, command);
 			return true;
 		}
 
@@ -233,7 +254,7 @@ public class ServerFacade implements IServerFacade {
 				.getCurrentTurn())) {
 			Command command = new FinishTurnCommand(serverModel);
 			command.execute();
-			incrementVersion(serverModel, command);
+			incrementVersion(gameID, serverModel, command);
 			return true;
 		}
 		return false;
@@ -412,7 +433,7 @@ public class ServerFacade implements IServerFacade {
 			Command command = new MaritimeTradeCommand(playerIndex, ratio, inputResource,
 					outputResource, serverModel);
 			command.execute();
-			incrementVersion(serverModel, command);
+			incrementVersion(gameID, serverModel, command);
 			return true;
 		}
 		return false;
@@ -450,7 +471,7 @@ public class ServerFacade implements IServerFacade {
 			// might need to change in the canDo in GameModel
 			Command command = new MonumentCommand(playerIndex, serverModel);
 			command.execute();
-			incrementVersion(serverModel, command);
+			incrementVersion(gameID, serverModel, command);
 			return true;
 		}
 		return false;
@@ -473,7 +494,7 @@ public class ServerFacade implements IServerFacade {
 				offer))) {
 			Command command = new OfferTradeCommand(playerIndex, offer, receiver, serverModel);
 			command.execute();
-			incrementVersion(serverModel, command);
+			incrementVersion(gameID, serverModel, command);
 			return true;
 		}
 		return false;
@@ -517,7 +538,7 @@ public class ServerFacade implements IServerFacade {
 		if (serverModel.canPlayDevCard(playerIndex, DevCardType.ROAD_BUILD)) {
 			Command command = new RoadBuildingCommand(playerIndex, spot1, spot2, serverModel);
 			command.execute();
-			incrementVersion(serverModel, command);
+			incrementVersion(gameID, serverModel, command);
 			return true;
 		}
 		return false;
@@ -539,7 +560,7 @@ public class ServerFacade implements IServerFacade {
 		if (serverModel.canPlaceRobber(playerIndex, 7, location)) {
 			Command command = new RobPlayerCommand(playerIndex, victimIndex, location, serverModel);
 			command.execute();
-			incrementVersion(serverModel, command);
+			incrementVersion(gameID, serverModel, command);
 			return true;
 		}
 		return false;
@@ -561,7 +582,7 @@ public class ServerFacade implements IServerFacade {
 		if (serverModel.canRollDice(sender)) {
 			Command command = new RollNumberCommand(sender, number, serverModel);
 			command.execute();
-			incrementVersion(serverModel, command);
+			incrementVersion(gameID, serverModel, command);
 			return true;
 		}
 		return false;
@@ -570,12 +591,12 @@ public class ServerFacade implements IServerFacade {
 	/**
 	 * Creates a SendChatCommand object and executes it.
 	 */
-	public boolean sendChat(int playerIndex, String content, int gameId) {
-		GameModel serverModel = gamesList.get(gameId);
+	public boolean sendChat(int playerIndex, String content, int gameID) {
+		GameModel serverModel = gamesList.get(gameID);
 		if (!content.isEmpty()) {
 			Command command = new SendChatCommand(content, playerIndex, serverModel);
 			command.execute();
-			incrementVersion(serverModel, command);
+			incrementVersion(gameID, serverModel, command);
 			return true;
 		}
 		return false;
@@ -597,7 +618,7 @@ public class ServerFacade implements IServerFacade {
 		if (serverModel.canPlayDevCard(playerIndex, DevCardType.SOLDIER)) {
 			Command command = new SoldierCommand(playerIndex, victimIndex, location, serverModel);
 			command.execute();
-			incrementVersion(serverModel, command);
+			incrementVersion(gameID, serverModel, command);
 			return true;
 		}
 		return false;
@@ -622,7 +643,7 @@ public class ServerFacade implements IServerFacade {
 		if (serverModel.canPlayDevCard(playerIndex, DevCardType.YEAR_OF_PLENTY)) {
 			Command command = new YearOfPlentyCommand(playerIndex, resource1, resource2, serverModel);
 			command.execute();
-			incrementVersion(serverModel, command);
+			incrementVersion(gameID, serverModel, command);
 			return true;
 		}
 		return false;
@@ -639,7 +660,7 @@ public class ServerFacade implements IServerFacade {
 		if(serverModel.canPlayDevCard(playerIndex, DevCardType.MONOPOLY)){
 			Command command = new MonopolyCommand(playerIndex, resourceType, serverModel);
 			command.execute();
-			incrementVersion(serverModel, command);
+			incrementVersion(gameID, serverModel, command);
 			return true;
 		}
 		return false;
@@ -680,15 +701,21 @@ public class ServerFacade implements IServerFacade {
 		return gamesList.get(gameId);
 	}
 	
-	private void incrementVersion(GameModel game, Command command){
-		game.incrementVersion();
-//		Server.abstractFactory.startTransaction();
-		gameDao.addCommand(command, game.getPrimaryKey());
-//		Server.abstractFactory.endTransaction(true);
-	}
-	
-	private void restore() {
-		// TODO Auto-generated method stub
-		
+	private void incrementVersion(int gameID, GameModel game, Command command){
+		int commands = this.commandAmountPerGame.get(gameID);
+		commands++;
+		if(commands < this.commandListLimit){
+			game.incrementVersion();
+//			Server.abstractFactory.startTransaction();
+			gameDao.addCommand(command, game.getPrimaryKey());
+//			Server.abstractFactory.endTransaction(true);
+			this.commandAmountPerGame.set(gameID, commands);
+		}
+		else{
+//			Server.abstractFactory.startTransaction();
+			gameDao.updateGame(game);
+//			Server.abstractFactory.endTransaction(true);
+			this.commandAmountPerGame.set(gameID, 0); //reset commands list
+		}
 	}
 }
