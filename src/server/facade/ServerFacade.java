@@ -53,18 +53,23 @@ public class ServerFacade implements IServerFacade {
 		// TODO Auto-generated method stub
 //		Server.abstractFactory.startTransaction();
 		
+		users = (ArrayList<User>) userDao.getAllUsers();
 		gamesList = (ArrayList<GameModel>) gameDao.getAllGames();
 		
 		for(GameModel game: gamesList){
-			executeCommands(game);
+			commandAmountPerGame.add(0);
+			executeCommands(game.getPrimaryKey());
 		}
 		
 //		Server.abstractFactory.endTransaction(true);
 	}
 
-	private void executeCommands(GameModel game) {
+	private void executeCommands(int primaryKey) {
 		// TODO Auto-generated method stub
-		gameDao.getCommands(game.getPrimaryKey());
+		List<Command> commands = gameDao.getCommands(primaryKey);
+		for(Command command: commands){
+			command.execute();
+		}
 	}
 
 	public static IServerFacade getSingleton() {
@@ -713,7 +718,7 @@ public class ServerFacade implements IServerFacade {
 		}
 		else{
 //			Server.abstractFactory.startTransaction();
-			gameDao.updateGame(game);
+			gameDao.updateGame(game);//also deletes commands in DB
 //			Server.abstractFactory.endTransaction(true);
 			this.commandAmountPerGame.set(gameID, 0); //reset commands list
 		}
