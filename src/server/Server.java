@@ -3,6 +3,8 @@ package server;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 
+import server.facade.ServerFacade;
+
 import com.sun.net.httpserver.HttpServer;
 
 /**
@@ -67,8 +69,14 @@ public class Server {
 					GameHandler.test=true;
 					GamesHandler.test=true;
 					MovesHandler.test=true;
+					if (args.length > 2 && args[2] != null) {
+						ServerFacade.storageType=args[2];
+					}
+				} else {
+					ServerFacade.storageType=args[1].toLowerCase();
 				}
 			}
+
 		}
 		new Server().run();
 	}

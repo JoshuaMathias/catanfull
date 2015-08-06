@@ -3,6 +3,9 @@ package server.facade;
 import java.util.ArrayList;
 import java.util.List;
 
+import abstractFactory.DbAbstractFactory;
+import abstractFactory.OtherAbstractFactory;
+
 import server.User;
 import server.command.*;
 import shared.gameModel.GameModel;
@@ -20,6 +23,10 @@ import client.serverproxy.GamesList;
 import client.data.*;
 import dao.IGameDao;
 import dao.IUserDao;
+import dao.database.DbGameDao;
+import dao.database.DbUserDao;
+import dao.other.OtherGameDao;
+import dao.other.OtherUserDao;
 import shared.definitions.CatanColor;
 import shared.definitions.DevCardType;
 import shared.definitions.PortType;
@@ -35,17 +42,29 @@ import shared.definitions.ResourceType;
  */
 public class ServerFacade implements IServerFacade {
 
+	public static String storageType;
 	private static IServerFacade serverFacade;
 	private ArrayList<GameModel> gamesList = new ArrayList<>();
 	private ArrayList<User> users = new ArrayList<>();
 //	private ArrayList< ArrayList<Command> > commands;
 	private ArrayList<Integer> commandAmountPerGame = new ArrayList<>();
-	private IGameDao gameDao;
-	private IUserDao userDao;
+	private static IGameDao gameDao;
+	private static IUserDao userDao;
 	
 	private int commandListLimit;
 
 	private ServerFacade() {
+		if (storageType.equals("db")) {
+			System.out.println("db factory");
+			DbAbstractFactory factory = new DbAbstractFactory();
+			gameDao = new DbGameDao(factory);
+			userDao = new DbUserDao(factory);
+		} else {
+			System.out.println("other factory");
+			OtherAbstractFactory factory = new OtherAbstractFactory();
+			gameDao = new OtherGameDao();
+			userDao = new OtherUserDao();
+		}
 		restore();
 	}
 	

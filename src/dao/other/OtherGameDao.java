@@ -12,6 +12,10 @@ import dao.IGameDao;
  *
  */
 public class OtherGameDao implements IGameDao {
+	
+	public OtherGameDao() {
+		
+	}
 
 	@Override
 	public void addGame(GameModel game) {

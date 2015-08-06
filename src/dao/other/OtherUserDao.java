@@ -12,6 +12,10 @@ import dao.IUserDao;
  */
 public class OtherUserDao implements IUserDao {
 
+	public OtherUserDao() {
+		
+	}
+	
 	@Override
 	public void addUser(User user) {
 		// TODO Auto-generated method stub
