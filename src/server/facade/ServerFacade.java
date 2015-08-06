@@ -42,7 +42,7 @@ import shared.definitions.ResourceType;
  */
 public class ServerFacade implements IServerFacade {
 
-	public static String storageType;
+	public static String storageType="";
 	private static IServerFacade serverFacade;
 	private ArrayList<GameModel> gamesList = new ArrayList<>();
 	private ArrayList<User> users = new ArrayList<>();
