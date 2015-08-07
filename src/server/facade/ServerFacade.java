@@ -3,9 +3,15 @@ package server.facade;
 import java.util.ArrayList;
 import java.util.List;
 
-import abstractFactory.DbAbstractFactory;
+
+
+
+
+
+
+//import abstractFactory.DbAbstractFactory;
 import abstractFactory.IAbstractFactory;
-import abstractFactory.OtherAbstractFactory;
+//import abstractFactory.OtherAbstractFactory;
 import server.User;
 import server.command.*;
 import shared.gameModel.GameModel;
@@ -50,10 +56,19 @@ public class ServerFacade implements IServerFacade {
 	private ServerFacade() {
 		if (storageType.equals("db")) {
 			System.out.println("db factory");
-			factory = new DbAbstractFactory();
+		
+			try {
+				factory = (IAbstractFactory) Class.forName("abstractFactory.DbAbstractFactory").newInstance();
+			} catch (InstantiationException | IllegalAccessException
+					| ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+//			factory = new DbAbstractFactory();
 		} else {
 			System.out.println("other factory");
-			factory = new OtherAbstractFactory();
+//			factory = new OtherAbstractFactory();
 		}
 		
 		if (isErase) {
