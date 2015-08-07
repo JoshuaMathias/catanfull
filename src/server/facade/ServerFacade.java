@@ -40,7 +40,6 @@ public class ServerFacade implements IServerFacade {
 	private static IServerFacade serverFacade;
 	private ArrayList<GameModel> gamesList = new ArrayList<>();
 	private ArrayList<User> users = new ArrayList<>();
-//	private ArrayList< ArrayList<Command> > commands;
 	private ArrayList<Integer> commandAmountPerGame = new ArrayList<>();
 	private IAbstractFactory factory;
 	private IGameDao gameDao;
