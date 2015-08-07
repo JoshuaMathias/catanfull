@@ -44,7 +44,7 @@ public class ServerFacade implements IServerFacade {
 	private IAbstractFactory factory;
 	private IGameDao gameDao;
 	private IUserDao userDao;
-	
+	public static boolean isErase;
 	public static int commandListLimit = 10;
 
 	private ServerFacade() {
@@ -56,7 +56,9 @@ public class ServerFacade implements IServerFacade {
 			factory = new OtherAbstractFactory();
 		}
 		
-//		factory.erase();
+		if (isErase) {
+			factory.erase();
+		}
 		
 		gameDao = factory.getGameDao();
 		userDao = factory.getUserDao();

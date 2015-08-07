@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Scanner;
 
 import server.User;
+import server.facade.IServerFacade;
+import server.facade.ServerFacade;
 import dao.IUserDao;
 
 /**
@@ -16,14 +18,18 @@ public class OtherUserDao implements IUserDao {
 	private String usersPath="persistent/Users";
 	private String gamesPath="persistent/Games";
 	private String commandsPath="persistent/Commands";
+	private IServerFacade facade;
 	
 	public OtherUserDao() {
-		
+		facade = ServerFacade.getSingleton();
 	}
 	
 	@Override
 	public void addUser(User user) {
-//		File usersDir=
+		File usersDir=new File(usersPath);
+		if (usersDir.isDirectory()) {
+			
+		}
 //		if (file.exists()) {
 //			Scanner scan = null;
 //			try {

@@ -84,10 +84,11 @@ public class Server {
 			if (args.length > 2 && args[2] != null) {
 				ServerFacade.commandListLimit=Integer.parseInt((args[2]));
 				System.out.println("Game will be saved every "+ServerFacade.commandListLimit+" commands.");
-			} else {
-				System.out.println("Using default number of commands (10).");
 			}
-
+			if (args.length > 3 && args[3] != null && args[3].toLowerCase().equals("erase")) {
+				ServerFacade.isErase=true;
+				System.out.println("Deleting previous data on server");
+			}
 		}
 		new Server().run();
 		IServerFacade serverFacade = ServerFacade.getSingleton();
