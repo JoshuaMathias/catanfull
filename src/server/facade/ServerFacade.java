@@ -56,6 +56,8 @@ public class ServerFacade implements IServerFacade {
 			factory = new OtherAbstractFactory();
 		}
 		
+//		factory.erase();
+		
 		gameDao = factory.getGameDao();
 		userDao = factory.getUserDao();
 		restore();
@@ -233,6 +235,12 @@ public class ServerFacade implements IServerFacade {
 		ArrayList<PlayerInfo> players = new ArrayList<PlayerInfo>(4);
 		while (players.size() < 4)
 			players.add(null);
+		
+		factory.startTransaction();
+		gameDao.addGame(gamesList.get(gamesList.size()-1));
+		factory.endTransaction(true);
+		this.commandAmountPerGame.add(0);
+		
 		return new GameInfo(gamesList.size() - 1, gameName, players);
 	}
 
@@ -535,6 +543,11 @@ public class ServerFacade implements IServerFacade {
 		User newUser = new User(username, password, users.size() - 1);
 		users.add(newUser);
 		System.out.println("Registration of " + username + " successful");
+		
+		factory.startTransaction();
+		userDao.addUser(users.get(users.size()-1));
+		factory.endTransaction(true);
+		
 		return users.size() - 1;
 	}
 
@@ -728,8 +741,8 @@ public class ServerFacade implements IServerFacade {
 			this.commandAmountPerGame.set(gameID, commands);
 		}
 		else{
-			gameDao.updateGame(game);//also deletes commands in DB
-			this.commandAmountPerGame.set(gameID, 0); //reset commands list
+			gameDao.updateGame(game);//also deletes commands for that specific game in DB
+			this.commandAmountPerGame.set(gameID, 0); //reset commands list amount
 		}
 		factory.endTransaction(true);
 	}
