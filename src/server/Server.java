@@ -61,9 +61,9 @@ public class Server {
 	}
 	
 	public static void main(String[] args) {
-		System.out.println("Started server");
 		if (args.length > 0 && args[0] != null) {
 			SERVER_PORT_NUMBER = Integer.parseInt((args[0]));
+			System.out.println("Started server on port "+SERVER_PORT_NUMBER);
 			if (args.length > 1 && args[1] != null) {
 				if (args[1].equals("test")) {
 					UserHandler.test=true;
@@ -76,6 +76,16 @@ public class Server {
 				} else {
 					ServerFacade.storageType=args[1].toLowerCase();
 				}
+			} else {
+				System.out.println("Please enter a storage type, such as \"db\" or " +
+						"\"file\"");
+				return;
+			}
+			if (args.length > 2 && args[2] != null) {
+				ServerFacade.commandListLimit=Integer.parseInt((args[2]));
+				System.out.println("Game will be saved every "+ServerFacade.commandListLimit+" commands.");
+			} else {
+				System.out.println("Using default number of commands (10).");
 			}
 
 		}

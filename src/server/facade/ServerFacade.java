@@ -45,7 +45,7 @@ public class ServerFacade implements IServerFacade {
 	private IGameDao gameDao;
 	private IUserDao userDao;
 	
-	private int commandListLimit = 10;
+	public static int commandListLimit = 10;
 
 	private ServerFacade() {
 		if (storageType.equals("db")) {
