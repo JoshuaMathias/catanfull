@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import abstractFactory.DbAbstractFactory;
+import abstractFactory.IAbstractFactory;
 import abstractFactory.OtherAbstractFactory;
-
 import server.User;
 import server.command.*;
 import shared.gameModel.GameModel;
@@ -19,14 +19,8 @@ import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
 import client.data.GameInfo;
 import client.data.PlayerInfo;
-import client.serverproxy.GamesList;
-import client.data.*;
 import dao.IGameDao;
 import dao.IUserDao;
-import dao.database.DbGameDao;
-import dao.database.DbUserDao;
-import dao.other.OtherGameDao;
-import dao.other.OtherUserDao;
 import shared.definitions.CatanColor;
 import shared.definitions.DevCardType;
 import shared.definitions.PortType;
@@ -48,29 +42,29 @@ public class ServerFacade implements IServerFacade {
 	private ArrayList<User> users = new ArrayList<>();
 //	private ArrayList< ArrayList<Command> > commands;
 	private ArrayList<Integer> commandAmountPerGame = new ArrayList<>();
-	private static IGameDao gameDao;
-	private static IUserDao userDao;
+	private IAbstractFactory factory;
+	private IGameDao gameDao;
+	private IUserDao userDao;
 	
-	private int commandListLimit;
+	private int commandListLimit = 10;
 
 	private ServerFacade() {
 		if (storageType.equals("db")) {
 			System.out.println("db factory");
-			DbAbstractFactory factory = new DbAbstractFactory();
-			gameDao = new DbGameDao(factory);
-			userDao = new DbUserDao(factory);
+			factory = new DbAbstractFactory();
 		} else {
 			System.out.println("other factory");
-			OtherAbstractFactory factory = new OtherAbstractFactory();
-			gameDao = new OtherGameDao();
-			userDao = new OtherUserDao();
+			factory = new OtherAbstractFactory();
 		}
+		
+		gameDao = factory.getGameDao();
+		userDao = factory.getUserDao();
 		restore();
 	}
 	
 	private void restore() {
 		// TODO Auto-generated method stub
-//		Server.abstractFactory.startTransaction();
+		factory.startTransaction();
 		
 		users = (ArrayList<User>) userDao.getAllUsers();
 		gamesList = (ArrayList<GameModel>) gameDao.getAllGames();
@@ -80,7 +74,7 @@ public class ServerFacade implements IServerFacade {
 			executeCommands(game.getPrimaryKey());
 		}
 		
-//		Server.abstractFactory.endTransaction(true);
+		factory.endTransaction(true);
 	}
 
 	private void executeCommands(int primaryKey) {
@@ -728,18 +722,16 @@ public class ServerFacade implements IServerFacade {
 	private void incrementVersion(int gameID, GameModel game, Command command){
 		int commands = this.commandAmountPerGame.get(gameID);
 		commands++;
+		factory.startTransaction();
 		if(commands < this.commandListLimit){
 			game.incrementVersion();
-//			Server.abstractFactory.startTransaction();
 			gameDao.addCommand(command, game.getPrimaryKey());
-//			Server.abstractFactory.endTransaction(true);
 			this.commandAmountPerGame.set(gameID, commands);
 		}
 		else{
-//			Server.abstractFactory.startTransaction();
 			gameDao.updateGame(game);//also deletes commands in DB
-//			Server.abstractFactory.endTransaction(true);
 			this.commandAmountPerGame.set(gameID, 0); //reset commands list
 		}
+		factory.endTransaction(true);
 	}
 }
