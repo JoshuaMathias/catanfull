@@ -1,5 +1,6 @@
 package dao.other;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import server.command.Command;
@@ -31,8 +32,7 @@ public class OtherGameDao implements IGameDao {
 
 	@Override
 	public List<GameModel> getAllGames() {
-		// TODO Auto-generated method stub
-		return null;
+		return new ArrayList<GameModel>();
 	}
 
 	@Override
