@@ -699,4 +699,10 @@ public class ServerFacadeTest implements IServerFacade {
         System.out.println("gameModel called");
         return gamesList.get(gameId);
     }
+
+	@Override
+	public void restore() {
+		// TODO Auto-generated method stub
+		
+	}
 }

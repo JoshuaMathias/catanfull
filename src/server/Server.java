@@ -3,6 +3,7 @@ package server;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 
+import server.facade.IServerFacade;
 import server.facade.ServerFacade;
 
 import com.sun.net.httpserver.HttpServer;
@@ -79,5 +80,8 @@ public class Server {
 
 		}
 		new Server().run();
+		IServerFacade serverFacade = ServerFacade.getSingleton();
+		serverFacade.restore();
+		
 	}
 }

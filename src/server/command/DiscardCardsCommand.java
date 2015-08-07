@@ -3,6 +3,9 @@ package server.command;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import Testing.Proxy.ServerFacadeTest;
+import server.GamesHandler;
+import server.facade.ServerFacade;
 import shared.gameModel.GameModel;
 import shared.gameModel.MessageLine;
 import shared.gameModel.Player;
@@ -22,16 +25,25 @@ public class DiscardCardsCommand implements Command, Serializable {
 	private int playerIndex;
 	private ResourceList discardedCards;
 	private GameModel serverModel;
+	private int gameID;
 	
 	public DiscardCardsCommand(int playerIndex, ResourceList discardedCards, GameModel serverModel){
 		this.playerIndex = playerIndex;
 		this.discardedCards = discardedCards;
 		this.serverModel = serverModel;
+		this.gameID = serverModel.getGameID();
 	}
 	
 	@Override
 	public void execute() {
 		// TODO Auto-generated method stub
+		
+		if (GamesHandler.test) {
+			serverModel = ServerFacadeTest.getSingleton().getGameModel(gameID);
+		} else {
+			serverModel = ServerFacade.getSingleton().getGameModel(gameID);
+		}
+		
 		ArrayList<Player> players = serverModel.getPlayers();
 		Player player = players.get(playerIndex);
 		ResourceList playerResources = player.getResources();

@@ -2,6 +2,9 @@ package server.command;
 
 import java.io.Serializable;
 
+import Testing.Proxy.ServerFacadeTest;
+import server.GamesHandler;
+import server.facade.ServerFacade;
 import shared.gameModel.DevCardList;
 import shared.gameModel.GameModel;
 import shared.gameModel.MessageLine;
@@ -20,15 +23,23 @@ public class MonumentCommand implements Command, Serializable {
 	private static final long serialVersionUID = -8419614526957462622L;
 	private Player player;
 	private GameModel serverModel;
+	private int gameID;
 	
 	public MonumentCommand(int playerIndex, GameModel serverModel) {
 	
 		this.player = serverModel.getPlayers().get(playerIndex);
 		this.serverModel = serverModel;
+		this.gameID = serverModel.getGameID();
 	}
 	
 	@Override
 	public void execute() {
+		
+		if (GamesHandler.test) {
+			serverModel = ServerFacadeTest.getSingleton().getGameModel(gameID);
+		} else {
+			serverModel = ServerFacade.getSingleton().getGameModel(gameID);
+		}
 		
 		DevCardList oldDevCards = player.getOldDevCards();
 		int oldDevMonumentAmount= oldDevCards.getMonument();

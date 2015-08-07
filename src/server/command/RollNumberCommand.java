@@ -2,6 +2,9 @@ package server.command;
 
 import java.util.ArrayList;
 
+import Testing.Proxy.ServerFacadeTest;
+import server.GamesHandler;
+import server.facade.ServerFacade;
 import shared.definitions.HexType;
 import shared.gameModel.GameModel;
 import shared.gameModel.Hex;
@@ -25,17 +28,25 @@ public class RollNumberCommand implements Command {
 	private GameModel serverModel;
 	
 	private HexLocation robberPosition;
+	private int gameID;
 	
 	public RollNumberCommand(int sender, int number, GameModel serverModel) {
 		super();
 		this.sender = sender;
 		this.number = number;
 		this.serverModel = serverModel;
+		this.gameID = serverModel.getGameID();
 	}
 
 	@Override
 	public void execute() {
 		// TODO Auto-generated method stub
+		
+		if (GamesHandler.test) {
+			serverModel = ServerFacadeTest.getSingleton().getGameModel(gameID);
+		} else {
+			serverModel = ServerFacade.getSingleton().getGameModel(gameID);
+		}
 		
 		Player player = serverModel.getPlayers().get(sender);
 		MessageLine line = new MessageLine();

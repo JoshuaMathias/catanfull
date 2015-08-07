@@ -2,6 +2,9 @@ package server.command;
 
 import java.io.Serializable;
 
+import Testing.Proxy.ServerFacadeTest;
+import server.GamesHandler;
+import server.facade.ServerFacade;
 import shared.gameModel.DevCardList;
 import shared.gameModel.GameModel;
 import shared.gameModel.MessageLine;
@@ -24,6 +27,7 @@ public class RoadBuildingCommand implements Command, Serializable {
 	private EdgeLocation spot1;
 	private EdgeLocation spot2;
 	private GameModel serverModel;
+	private int gameID;
 	
 	public RoadBuildingCommand(int sender, EdgeLocation spot1,
 			EdgeLocation spot2, GameModel serverModel) {
@@ -32,11 +36,19 @@ public class RoadBuildingCommand implements Command, Serializable {
 		this.spot1 = spot1.getNormalizedLocation();
 		this.spot2 = spot2.getNormalizedLocation();
 		this.serverModel = serverModel;
+		this.gameID = serverModel.getGameID();
 	}
 
 	@Override
 	public void execute() {
 		// TODO Auto-generated method stub
+		
+		if (GamesHandler.test) {
+			serverModel = ServerFacadeTest.getSingleton().getGameModel(gameID);
+		} else {
+			serverModel = ServerFacade.getSingleton().getGameModel(gameID);
+		}
+		
 		Player player = serverModel.getPlayers().get(sender);
 		DevCardList playerOldDevCards = player.getOldDevCards();
 		

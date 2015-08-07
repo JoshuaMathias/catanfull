@@ -60,10 +60,10 @@ public class ServerFacade implements IServerFacade {
 		
 		gameDao = factory.getGameDao();
 		userDao = factory.getUserDao();
-		restore();
+//		restore();
 	}
 	
-	private void restore() {
+	public void restore() {
 		// TODO Auto-generated method stub
 		factory.startTransaction();
 		
@@ -73,6 +73,7 @@ public class ServerFacade implements IServerFacade {
 		for(GameModel game: gamesList){
 			commandAmountPerGame.add(0);
 			executeCommands(game.getPrimaryKey());
+			gameDao.updateGame(game);
 		}
 		
 		factory.endTransaction(true);
@@ -411,6 +412,11 @@ public class ServerFacade implements IServerFacade {
 						convertColorToEnum(color), user.getName(),
 						user.getPlayerID(), thisGame);
 				joinGameCommand.execute();
+				
+				factory.startTransaction();
+				gameDao.updateGame(thisGame);
+				factory.endTransaction(true);
+				
 			}
 			return true;
 		} else {
@@ -732,11 +738,11 @@ public class ServerFacade implements IServerFacade {
 	}
 	
 	private void incrementVersion(int gameID, GameModel game, Command command){
+		game.incrementVersion();
 		int commands = this.commandAmountPerGame.get(gameID);
 		commands++;
 		factory.startTransaction();
 		if(commands < this.commandListLimit){
-			game.incrementVersion();
 			gameDao.addCommand(command, game.getPrimaryKey());
 			this.commandAmountPerGame.set(gameID, commands);
 		}
