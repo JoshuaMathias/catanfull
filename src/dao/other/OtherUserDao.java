@@ -41,8 +41,6 @@ public class OtherUserDao implements IUserDao {
 	
 	@Override
 	public void addUser(User user) {
-		File usersDir=new File(usersPath);
-		if (usersDir.isDirectory()) {
 //			try(PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(usersFile, true)))) {
 //				out.write(g.toJson(user));
 //			}
@@ -54,9 +52,6 @@ public class OtherUserDao implements IUserDao {
 				System.out.println("Failed to write user to file.");
 				e.printStackTrace();
 			}
-		} else {
-			System.out.println("Couldn't find directory "+usersDir);
-		}
 	}
 
 	@Override
