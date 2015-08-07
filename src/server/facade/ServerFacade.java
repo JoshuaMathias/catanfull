@@ -546,7 +546,7 @@ public class ServerFacade implements IServerFacade {
 				return -1;
 			}
 		}
-		User newUser = new User(username, password, users.size() - 1);
+		User newUser = new User(username, password, users.size());
 		users.add(newUser);
 		System.out.println("Registration of " + username + " successful");
 		
