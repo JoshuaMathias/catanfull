@@ -124,7 +124,7 @@ public class OtherGameDao implements IGameDao {
 		String commandFileStr = commandsPath + File.separator + "Commands" + gameID+".txt";
 		List <Command> commands = new ArrayList<>();
 			File commandsFile = new File(commandFileStr);
-			if (!commandsFile.exists()) {
+			if (commandsFile.exists()) {
 				Scanner commandScan;
 				try {
 					commandScan = new Scanner(commandsFile);

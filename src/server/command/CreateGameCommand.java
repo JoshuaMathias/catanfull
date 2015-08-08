@@ -34,7 +34,7 @@ public class CreateGameCommand implements Command, Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = -1764798123223433364L;
-	private transient IServerFacade serverFacade;
+	private IServerFacade serverFacade;
 	private boolean randomTiles;
 	private boolean randomNumbers;
 	private boolean randomPorts;
