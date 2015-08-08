@@ -68,7 +68,12 @@ public class ServerFacade implements IServerFacade {
 //			factory = new DbAbstractFactory();
 		} else {
 			System.out.println("other factory");
-//			factory = new OtherAbstractFactory();
+			try {
+				factory = (IAbstractFactory) Class.forName("abstractFactory.OtherAbstractFactory").newInstance();
+			} catch (InstantiationException | IllegalAccessException
+					| ClassNotFoundException e) {
+				e.printStackTrace();
+			}
 		}
 		
 		if (isErase) {
