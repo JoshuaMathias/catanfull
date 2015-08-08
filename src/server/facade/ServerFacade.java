@@ -102,7 +102,6 @@ public class ServerFacade implements IServerFacade {
 	}
 
 	private void executeCommands(int primaryKey) {
-		// TODO Auto-generated method stub
 		List<Command> commands = gameDao.getCommands(primaryKey);
 		for(Command command: commands){
 			command.execute();
@@ -765,6 +764,7 @@ public class ServerFacade implements IServerFacade {
 		commands++;
 		factory.startTransaction();
 		if(commands < this.commandListLimit){
+			System.out.println("key: "+game.getPrimaryKey());
 			gameDao.addCommand(command, game.getPrimaryKey());
 			this.commandAmountPerGame.set(gameID, commands);
 		}

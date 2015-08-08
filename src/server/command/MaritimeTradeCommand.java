@@ -26,7 +26,7 @@ public class MaritimeTradeCommand implements Command, Serializable {
 	private int ratio;
 	private ResourceType inputResource;
 	private ResourceType outputResource;
-	private GameModel serverModel;
+	private transient GameModel serverModel;
 	private int gameID;
 	
 	public MaritimeTradeCommand(int playerIndex, int ratio,

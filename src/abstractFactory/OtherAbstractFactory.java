@@ -1,5 +1,11 @@
 package abstractFactory;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
+import shared.gameModel.GameModel;
+
 import dao.IGameDao;
 import dao.IUserDao;
 import dao.other.OtherGameDao;
@@ -17,37 +23,42 @@ public class OtherAbstractFactory implements IAbstractFactory {
 	
 	@Override
 	public IUserDao getUserDao() {
-		// TODO Auto-generated method stub
 		return userDao;
 	}
 
 	@Override
 	public IGameDao getGameDao() {
-		// TODO Auto-generated method stub
 		return gameDao;
 	}
 
 	@Override
 	public void erase() {
-		// TODO Auto-generated method stub
-		
+		File usersFile = new File("persistent" + File.separator + "Users"
+			+ File.separator + "users.txt");
+		if (usersFile.exists()) {
+			usersFile.delete();
+		}
+		int gameID = 0;
+		File gameFile = new File("persistent" + File.separator + "Games" + File.separator + "Game" + gameID+".txt");
+		while (gameFile.exists()) {
+			gameFile.delete();
+			gameID++;
+			gameFile = new File("persistent" + File.separator + "Games" + File.separator + "Game" + gameID+".txt");
+		}
 	}
 
 	@Override
 	public void startTransaction() {
-		// TODO Auto-generated method stub
 		
 	}
 	
 	@Override
 	public boolean inTransaction() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public void endTransaction(boolean commit) {
-		// TODO Auto-generated method stub
 		
 	}
 

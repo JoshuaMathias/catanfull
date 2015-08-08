@@ -33,7 +33,7 @@ public class BuildSettlementCommand implements Command, Serializable {
 	int playerIndex;
 	VertexLocation vertexLocation;
 	boolean free;
-	private GameModel serverModel;
+	private transient GameModel serverModel;
 	
 	private Player player;
 	private int gameID;

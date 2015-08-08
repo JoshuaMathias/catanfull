@@ -21,7 +21,7 @@ public class MonopolyCommand implements Command, Serializable {
 	private static final long serialVersionUID = 891345239559347169L;
 	private int playerIndex;
 	private ResourceType resource;
-	private GameModel serverModel;
+	private transient GameModel serverModel;
 	
 	private Player monopolyPlayer;
 	private ResourceList monopolyPlayerResources;

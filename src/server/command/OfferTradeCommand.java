@@ -25,7 +25,7 @@ public class OfferTradeCommand implements Command, Serializable {
 	int sender;
 	ResourceList offer;
 	int receiver;
-	GameModel serverModel;
+	transient GameModel serverModel;
 	private int gameID;
 	
 	public OfferTradeCommand(int sender, ResourceList offer, int receiver,

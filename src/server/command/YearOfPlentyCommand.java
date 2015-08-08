@@ -27,7 +27,7 @@ public class YearOfPlentyCommand implements Command, Serializable {
 	private int playerIndex;
 	private ResourceType cardOne;
 	private ResourceType cardTwo;
-	private GameModel serverModel;
+	private transient GameModel serverModel;
 	private int gameID;
 	
 	public YearOfPlentyCommand(int playerIndex, ResourceType cardOne, ResourceType cardTwo, GameModel serverModel) {

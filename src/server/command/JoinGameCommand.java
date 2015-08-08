@@ -23,7 +23,7 @@ public class JoinGameCommand implements Command, Serializable {
 	private CatanColor color;
 	private String username;
 	private int playerID;
-	private GameModel serverModel;
+	private transient GameModel serverModel;
 	private int gameID;
 	
 	public JoinGameCommand(CatanColor color, String username, int playerID, GameModel serverModel){

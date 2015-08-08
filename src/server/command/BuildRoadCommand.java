@@ -28,7 +28,7 @@ public class BuildRoadCommand implements Command, Serializable {
 	private int playerIndex;
 	private EdgeLocation roadLocation;
 	private boolean free;
-	private GameModel serverModel;
+	private transient GameModel serverModel;
 	private Player player;
 	private int gameID;
 	

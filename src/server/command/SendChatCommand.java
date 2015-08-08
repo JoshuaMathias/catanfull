@@ -22,7 +22,7 @@ public class SendChatCommand implements Command, Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = -8149568725648502070L;
-	private GameModel serverModel;
+	private transient GameModel serverModel;
 	private String message;
 	private int playerIndex;
 	private int gameID;

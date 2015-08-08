@@ -29,7 +29,7 @@ public class RobPlayerCommand implements Command, Serializable {
 	private int playerIndex;
 	private int victimIndex;
 	private HexLocation robber;
-	private GameModel serverModel;
+	private transient GameModel serverModel;
 
 	private Player player;
 	private Player victim;

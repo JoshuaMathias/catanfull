@@ -25,7 +25,7 @@ public class SoldierCommand implements Command, Serializable {
 	int playerIndex;
 	int victimIndex;
 	HexLocation location;
-	GameModel serverModel;
+	transient GameModel serverModel;
 	private int gameID;
 	
 	public SoldierCommand(int playerIndex, int victimIndex, HexLocation location, GameModel serverModel) {

@@ -27,7 +27,7 @@ public class BuildCityCommand implements Command, Serializable {
 	private static final long serialVersionUID = -275579207207116950L;
 	private int playerIndex;
 	private VertexLocation vertexLocation;
-	private GameModel serverModel;
+	private transient GameModel serverModel;
 	private Player player;
 	private int gameID;
 	

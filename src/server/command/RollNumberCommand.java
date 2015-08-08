@@ -25,7 +25,7 @@ public class RollNumberCommand implements Command {
 
 	private int sender;
 	private int number;
-	private GameModel serverModel;
+	private transient GameModel serverModel;
 	
 	private HexLocation robberPosition;
 	private int gameID;

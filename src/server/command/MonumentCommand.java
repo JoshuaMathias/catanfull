@@ -22,7 +22,7 @@ public class MonumentCommand implements Command, Serializable {
 	 */
 	private static final long serialVersionUID = -8419614526957462622L;
 	private Player player;
-	private GameModel serverModel;
+	private transient GameModel serverModel;
 	private int gameID;
 	
 	public MonumentCommand(int playerIndex, GameModel serverModel) {

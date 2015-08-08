@@ -24,7 +24,7 @@ public class DiscardCardsCommand implements Command, Serializable {
 	private static final long serialVersionUID = -6370485199845730789L;
 	private int playerIndex;
 	private ResourceList discardedCards;
-	private GameModel serverModel;
+	private transient GameModel serverModel;
 	private int gameID;
 	
 	public DiscardCardsCommand(int playerIndex, ResourceList discardedCards, GameModel serverModel){

@@ -26,7 +26,7 @@ public class RoadBuildingCommand implements Command, Serializable {
 	private int sender;
 	private EdgeLocation spot1;
 	private EdgeLocation spot2;
-	private GameModel serverModel;
+	private transient GameModel serverModel;
 	private int gameID;
 	
 	public RoadBuildingCommand(int sender, EdgeLocation spot1,
