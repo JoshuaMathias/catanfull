@@ -50,6 +50,7 @@ public class OtherGameDao implements IGameDao {
 		} else {
 			System.out.println("Directory "+gamesPath+" doesn't exist.");
 		}
+		game.setPrimaryKey(game.getGameID());
 	}
 
 	@Override
