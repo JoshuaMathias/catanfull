@@ -764,7 +764,6 @@ public class ServerFacade implements IServerFacade {
 		commands++;
 		factory.startTransaction();
 		if(commands < this.commandListLimit){
-			System.out.println("key: "+game.getPrimaryKey());
 			gameDao.addCommand(command, game.getPrimaryKey());
 			this.commandAmountPerGame.set(gameID, commands);
 		}
