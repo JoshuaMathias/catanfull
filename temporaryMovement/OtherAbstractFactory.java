@@ -40,10 +40,13 @@ public class OtherAbstractFactory implements IAbstractFactory {
 		}
 		int gameID = 0;
 		File gameFile = new File("persistent" + File.separator + "Games" + File.separator + "Game" + gameID+".txt");
+		File commandFile = new File("persistent" + File.separator + "Commands" + File.separator + "Commands" + gameID+".txt");
 		while (gameFile.exists()) {
+			commandFile.delete();
 			gameFile.delete();
 			gameID++;
 			gameFile = new File("persistent" + File.separator + "Games" + File.separator + "Game" + gameID+".txt");
+			commandFile = new File("persistent" + File.separator + "Commands" + File.separator + "Commands" + gameID+".txt");
 		}
 	}
 
