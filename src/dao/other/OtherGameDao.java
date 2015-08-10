@@ -133,12 +133,9 @@ public class OtherGameDao implements IGameDao {
 		if (classMatch.find()) {
 			className = classMatch.group();
 		}
-		System.out.println("className: " + className);
-		System.out.println("case: "
-				+ "\"className\":\"BuildSettlementCommand\"");
-		if (className.equals("\"className\":\"AcceptTradeCommand\"")) {
-			System.out.println("className is equal.");
-		}
+//		System.out.println("className: " + className);
+//		System.out.println("case: "
+//				+ "\"className\":\"BuildSettlementCommand\"");
 		if (className.equals("\"className\":\"AcceptTradeCommand\"")) {
 			return g.fromJson(commandJson, AcceptTradeCommand.class);
 		} else if (className.equals("\"className\":\"BuildCityCommand\"")) {
@@ -147,10 +144,14 @@ public class OtherGameDao implements IGameDao {
 			return g.fromJson(commandJson, BuildRoadCommand.class);
 		} else if (className.equals("\"className\":\"BuildSettlementCommand\"")) {
 			return g.fromJson(commandJson, BuildSettlementCommand.class);
+		} else if (className.equals("\"className\":\"BuyDevCardCommand\"")) {
+			return g.fromJson(commandJson, BuyDevCardCommand.class);
 		} else if (className.equals("\"className\":\"CreateGameCommand\"")) {
 			return g.fromJson(commandJson, CreateGameCommand.class);
 		} else if (className.equals("\"className\":\"DiscardCardsCommand\"")) {
 			return g.fromJson(commandJson, DiscardCardsCommand.class);
+		} else if (className.equals("\"className\":\"FinishTurnCommand\"")) {
+			return g.fromJson(commandJson, FinishTurnCommand.class);
 		} else if (className.equals("\"className\":\"JoinGameCommand\"")) {
 			return g.fromJson(commandJson, JoinGameCommand.class);
 		} else if (className.equals("\"className\":\"MaritimeTradeCommand\"")) {
@@ -173,9 +174,9 @@ public class OtherGameDao implements IGameDao {
 			return g.fromJson(commandJson, SoldierCommand.class);
 		} else if (className.equals("\"className\":\"YearOfPlentyCommand\"")) {
 			return g.fromJson(commandJson, YearOfPlentyCommand.class);
+		} else {
+			return new AcceptTradeCommand(0, false, null);
 		}
-		System.out.println("Why is this happening.");
-		return new AcceptTradeCommand(0, false, null);
 
 	}
 
@@ -190,7 +191,11 @@ public class OtherGameDao implements IGameDao {
 			try {
 				commandScan = new Scanner(commandsFile);
 				while (commandScan.hasNextLine()) {
-					commands.add(convertIntoCommand(commandScan.nextLine()));
+					String line = commandScan.nextLine();
+					if (line.length()>1) {
+						commands.add(convertIntoCommand(line));
+					}
+					
 				}
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
