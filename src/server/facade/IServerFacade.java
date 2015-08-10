@@ -308,4 +308,6 @@ public interface IServerFacade {
     public boolean gameExist(int gameIndex);
 
     public GameModel getGameModel(int gameId);
+
+	public void restore();
 }

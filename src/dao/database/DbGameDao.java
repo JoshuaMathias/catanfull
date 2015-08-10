@@ -59,7 +59,7 @@ public class DbGameDao implements IGameDao {
 				game.setPrimaryKey(id);
 			}
 			else {
-				System.out.println("Could not insert the user");
+				System.out.println("Could not add the game");
 			}
 			
 		} catch (SQLException e) {
@@ -155,7 +155,10 @@ public class DbGameDao implements IGameDao {
 			
 			if(stmt.executeUpdate() != 1) {;
 				
-				System.out.println("The Game was not update!!!!");
+				System.out.println("The Game was not updated!!!!");
+			}
+			else{
+				System.out.println("The Game was updated correctly");
 			}
 			
 		} catch (SQLException e) {
@@ -186,6 +189,9 @@ public class DbGameDao implements IGameDao {
 			if(stmt.executeUpdate() != 1) {;
 				
 				System.out.println("The Commands were not deleted!!!!");
+			}
+			else{
+				System.out.println("The Commands were deleted");
 			}
 			
 		} catch (SQLException e) {
@@ -226,10 +232,10 @@ public class DbGameDao implements IGameDao {
 			
 			if(stmt.executeUpdate() == 1) {
 				
-				System.out.println("Inserted game correctly");
+				System.out.println("Inserted command correctly");
 			}
 			else {
-				System.out.println("Could not insert the user");
+				System.out.println("Could not add the command");
 			}
 			
 		} catch (SQLException e) {

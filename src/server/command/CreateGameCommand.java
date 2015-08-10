@@ -71,7 +71,7 @@ public class CreateGameCommand implements Command, Serializable {
 		}
 		
 		serverModel.setMap(gameBoard);
-		
+		serverModel.setGameID(serverFacade.getGamesList().size());
 		serverFacade.addGameToList(serverModel);
 	}
 

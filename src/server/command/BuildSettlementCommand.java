@@ -3,6 +3,8 @@ package server.command;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import Testing.Proxy.ServerFacadeTest;
+import server.GamesHandler;
 import server.facade.ServerFacade;
 import shared.definitions.HexType;
 import shared.gameModel.GameModel;
@@ -31,22 +33,31 @@ public class BuildSettlementCommand implements Command, Serializable {
 	int playerIndex;
 	VertexLocation vertexLocation;
 	boolean free;
-	private GameModel serverModel;
+	private transient GameModel serverModel;
 	
 	private Player player;
+	private int gameID;
 	
 	public BuildSettlementCommand(int playerIndex,
 			VertexLocation vertexLocation, boolean free, GameModel serverModel) {
 		// TODO Auto-generated constructor stub
 		this.playerIndex = playerIndex;
-		this.vertexLocation = vertexLocation;
+		this.vertexLocation = vertexLocation.getNormalizedLocation();
 		this.free = free;
 		this.serverModel = serverModel;
+		this.gameID = serverModel.getGameID();
 	}
 
 	@Override
 	public void execute() {
 		// TODO Auto-generated method stub
+		
+		if (GamesHandler.test) {
+			serverModel = ServerFacadeTest.getSingleton().getGameModel(gameID);
+		} else {
+			serverModel = ServerFacade.getSingleton().getGameModel(gameID);
+		}
+		
 		ArrayList<Player> playerList = serverModel.getPlayers();
 		ResourceList bank = serverModel.getBank();
 	

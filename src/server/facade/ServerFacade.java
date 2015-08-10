@@ -3,9 +3,15 @@ package server.facade;
 import java.util.ArrayList;
 import java.util.List;
 
-import abstractFactory.DbAbstractFactory;
+
+
+
+
+
+
+//import abstractFactory.DbAbstractFactory;
 import abstractFactory.IAbstractFactory;
-import abstractFactory.OtherAbstractFactory;
+//import abstractFactory.OtherAbstractFactory;
 import server.User;
 import server.command.*;
 import shared.gameModel.GameModel;
@@ -40,29 +46,46 @@ public class ServerFacade implements IServerFacade {
 	private static IServerFacade serverFacade;
 	private ArrayList<GameModel> gamesList = new ArrayList<>();
 	private ArrayList<User> users = new ArrayList<>();
-//	private ArrayList< ArrayList<Command> > commands;
 	private ArrayList<Integer> commandAmountPerGame = new ArrayList<>();
 	private IAbstractFactory factory;
 	private IGameDao gameDao;
 	private IUserDao userDao;
-	
-	private int commandListLimit = 10;
+	public static boolean isErase;
+	public static int commandListLimit = 10;
 
 	private ServerFacade() {
 		if (storageType.equals("db")) {
 			System.out.println("db factory");
-			factory = new DbAbstractFactory();
+		
+			try {
+				factory = (IAbstractFactory) Class.forName("abstractFactory.DbAbstractFactory").newInstance();
+			} catch (InstantiationException | IllegalAccessException
+					| ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+//			factory = new DbAbstractFactory();
 		} else {
 			System.out.println("other factory");
-			factory = new OtherAbstractFactory();
+			try {
+				factory = (IAbstractFactory) Class.forName("abstractFactory.OtherAbstractFactory").newInstance();
+			} catch (InstantiationException | IllegalAccessException
+					| ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		if (isErase) {
+			factory.erase();
 		}
 		
 		gameDao = factory.getGameDao();
 		userDao = factory.getUserDao();
-		restore();
+//		restore();
 	}
 	
-	private void restore() {
+	public void restore() {
 		// TODO Auto-generated method stub
 		factory.startTransaction();
 		
@@ -72,13 +95,13 @@ public class ServerFacade implements IServerFacade {
 		for(GameModel game: gamesList){
 			commandAmountPerGame.add(0);
 			executeCommands(game.getPrimaryKey());
+			gameDao.updateGame(game);
 		}
 		
 		factory.endTransaction(true);
 	}
 
 	private void executeCommands(int primaryKey) {
-		// TODO Auto-generated method stub
 		List<Command> commands = gameDao.getCommands(primaryKey);
 		for(Command command: commands){
 			command.execute();
@@ -234,6 +257,12 @@ public class ServerFacade implements IServerFacade {
 		ArrayList<PlayerInfo> players = new ArrayList<PlayerInfo>(4);
 		while (players.size() < 4)
 			players.add(null);
+		
+		factory.startTransaction();
+		gameDao.addGame(gamesList.get(gamesList.size()-1));
+		factory.endTransaction(true);
+		this.commandAmountPerGame.add(0);
+		
 		return new GameInfo(gamesList.size() - 1, gameName, players);
 	}
 
@@ -404,6 +433,11 @@ public class ServerFacade implements IServerFacade {
 						convertColorToEnum(color), user.getName(),
 						user.getPlayerID(), thisGame);
 				joinGameCommand.execute();
+				
+				factory.startTransaction();
+				gameDao.updateGame(thisGame);
+				factory.endTransaction(true);
+				
 			}
 			return true;
 		} else {
@@ -533,9 +567,14 @@ public class ServerFacade implements IServerFacade {
 				return -1;
 			}
 		}
-		User newUser = new User(username, password, users.size() - 1);
+		User newUser = new User(username, password, users.size());
 		users.add(newUser);
 		System.out.println("Registration of " + username + " successful");
+		
+		factory.startTransaction();
+		userDao.addUser(users.get(users.size()-1));
+		factory.endTransaction(true);
+		
 		return users.size() - 1;
 	}
 
@@ -720,17 +759,17 @@ public class ServerFacade implements IServerFacade {
 	}
 	
 	private void incrementVersion(int gameID, GameModel game, Command command){
+		game.incrementVersion();
 		int commands = this.commandAmountPerGame.get(gameID);
 		commands++;
 		factory.startTransaction();
 		if(commands < this.commandListLimit){
-			game.incrementVersion();
 			gameDao.addCommand(command, game.getPrimaryKey());
 			this.commandAmountPerGame.set(gameID, commands);
 		}
 		else{
-			gameDao.updateGame(game);//also deletes commands in DB
-			this.commandAmountPerGame.set(gameID, 0); //reset commands list
+			gameDao.updateGame(game);//also deletes commands for that specific game in DB
+			this.commandAmountPerGame.set(gameID, 0); //reset commands list amount
 		}
 		factory.endTransaction(true);
 	}

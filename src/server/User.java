@@ -12,6 +12,7 @@ public class User {
 	public User(String username, String password, int playerID) {
 		this.name = username;
 		this.password = password;
+		this.playerID = playerID;
 	}
 	public String getName() {
 		return name;

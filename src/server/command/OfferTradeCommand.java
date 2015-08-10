@@ -2,6 +2,9 @@ package server.command;
 
 import java.io.Serializable;
 
+import Testing.Proxy.ServerFacadeTest;
+import server.GamesHandler;
+import server.facade.ServerFacade;
 import shared.gameModel.GameModel;
 import shared.gameModel.MessageLine;
 import shared.gameModel.Player;
@@ -22,7 +25,8 @@ public class OfferTradeCommand implements Command, Serializable {
 	int sender;
 	ResourceList offer;
 	int receiver;
-	GameModel serverModel;
+	transient GameModel serverModel;
+	private int gameID;
 	
 	public OfferTradeCommand(int sender, ResourceList offer, int receiver,
 			GameModel serverModel) {
@@ -31,11 +35,19 @@ public class OfferTradeCommand implements Command, Serializable {
 		this.offer = offer;
 		this.receiver = receiver;
 		this.serverModel = serverModel;
+		this.gameID = serverModel.getGameID();
 	}
 	
 	@Override
 	public void execute() {
 		// TODO Auto-generated method stub
+		
+		if (GamesHandler.test) {
+			serverModel = ServerFacadeTest.getSingleton().getGameModel(gameID);
+		} else {
+			serverModel = ServerFacade.getSingleton().getGameModel(gameID);
+		}
+		
 		TradeOffer tradeOffer = new TradeOffer();
 		tradeOffer.setSender(sender);
 		tradeOffer.setReceiver(receiver);

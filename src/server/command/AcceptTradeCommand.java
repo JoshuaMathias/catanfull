@@ -3,6 +3,9 @@ package server.command;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import Testing.Proxy.ServerFacadeTest;
+import server.GamesHandler;
+import server.facade.ServerFacade;
 import shared.gameModel.GameModel;
 import shared.gameModel.MessageLine;
 import shared.gameModel.Player;
@@ -22,17 +25,26 @@ public class AcceptTradeCommand implements Command, Serializable{
 	private static final long serialVersionUID = 4777851003074432445L;
 	private int playerIndex;
 	private boolean willAccept;
-	private GameModel serverModel;
+	private transient GameModel serverModel;
+	private int gameID;
 	
 	public AcceptTradeCommand(int playerIndex, boolean willAccept, GameModel serverModel){
 		this.playerIndex = playerIndex;
 		this.willAccept = willAccept;
 		this.serverModel = serverModel;
+		this.gameID = serverModel.getGameID();
 	}
 	
 	@Override
 	public void execute() {
 		// TODO Auto-generated method stub
+		
+		if (GamesHandler.test) {
+			serverModel = ServerFacadeTest.getSingleton().getGameModel(gameID);
+		} else {
+			serverModel = ServerFacade.getSingleton().getGameModel(gameID);
+		}
+		
 		if (willAccept){
 			TradeOffer tradeOffer = serverModel.getTradeOffer();
 			ResourceList offerList = tradeOffer.getOffer();

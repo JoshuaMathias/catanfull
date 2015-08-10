@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 
+import Testing.Proxy.ServerFacadeTest;
+import server.GamesHandler;
+import server.facade.ServerFacade;
 import shared.definitions.ResourceType;
 import shared.gameModel.GameModel;
 import shared.gameModel.MessageLine;
@@ -26,10 +29,11 @@ public class RobPlayerCommand implements Command, Serializable {
 	private int playerIndex;
 	private int victimIndex;
 	private HexLocation robber;
-	private GameModel serverModel;
+	private transient GameModel serverModel;
 
 	private Player player;
 	private Player victim;
+	private int gameID;
 
 	public RobPlayerCommand(int playerIndex, int victimIndex,
 			HexLocation robber, GameModel serverModel) {
@@ -38,11 +42,19 @@ public class RobPlayerCommand implements Command, Serializable {
 		this.victimIndex = victimIndex;
 		this.robber = robber;
 		this.serverModel = serverModel;
+		this.gameID = serverModel.getGameID();
 	}
 
 	@Override
 	public void execute() {
 		// TODO Auto-generated method stub
+		
+		if (GamesHandler.test) {
+			serverModel = ServerFacadeTest.getSingleton().getGameModel(gameID);
+		} else {
+			serverModel = ServerFacade.getSingleton().getGameModel(gameID);
+		}
+		
 		player = serverModel.getPlayers().get(playerIndex);
 		if (victimIndex != -1) {
 			Random random = new Random();
