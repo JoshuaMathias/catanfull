@@ -60,6 +60,7 @@ public class Server {
 		return SERVER_PORT_NUMBER;
 	}
 	
+
 	public static void main(String[] args) {
 		if (args.length > 0 && args[0] != null) {
 			SERVER_PORT_NUMBER = Integer.parseInt((args[0]));
@@ -70,10 +71,14 @@ public class Server {
 					GameHandler.test=true;
 					GamesHandler.test=true;
 					MovesHandler.test=true;
-					if (args.length > 2 && args[2] != null) {
+					
+					if (args.length > 2 && args[2] != null) 
+					{
 						ServerFacade.storageType=args[2];
 					}
-				} else {
+				} 
+				else 
+				{
 					ServerFacade.storageType=args[1].toLowerCase();
 				}
 			} else {

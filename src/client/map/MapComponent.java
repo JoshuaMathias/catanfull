@@ -644,7 +644,7 @@ public class MapComponent extends JComponent
 	
 	private void drawNumbers(Graphics2D g2)
 	{
-		
+		try{
 		for (Map.Entry<HexLocation, Integer> entry : numbers.entrySet())
 		{
 			
@@ -653,6 +653,11 @@ public class MapComponent extends JComponent
 			Point2D hexCenter = getHexPoint(entry.getKey());
 			
 			drawImage(g2, numImage, hexCenter);
+		}
+		}
+		catch(ConcurrentModificationException e)
+		{
+			System.out.println("DANIEL, DO YOU TRUST ME");
 		}
 	}
 	
@@ -673,11 +678,17 @@ public class MapComponent extends JComponent
 	
 	private void drawRoads(Graphics2D g2)
 	{
+		try{
 		for (Map.Entry<EdgeLocation, CatanColor> entry : roads.entrySet())
 		{
 			EdgeLocation edgeLoc = entry.getKey();
 			CatanColor color = entry.getValue();
 			drawRoad(g2, edgeLoc, color);
+		}
+		}
+		catch(ConcurrentModificationException e)
+		{
+			System.out.println("NOW IT'S DOING IT SOMEWHERE ELSE");
 		}
 	}
 	
