@@ -25,6 +25,7 @@ public class RobPlayerCommand implements Command, Serializable {
 	/**
 	 * 
 	 */
+	private String className = "RobPlayerCommand";
 	private static final long serialVersionUID = -7454001069108204735L;
 	private int playerIndex;
 	private int victimIndex;

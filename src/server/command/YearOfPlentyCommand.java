@@ -23,6 +23,7 @@ public class YearOfPlentyCommand implements Command, Serializable {
 	/**
 	 * 
 	 */
+	private String className = "YearOfPlentyCommand";
 	private static final long serialVersionUID = 8203427744840950814L;
 	private int playerIndex;
 	private ResourceType cardOne;

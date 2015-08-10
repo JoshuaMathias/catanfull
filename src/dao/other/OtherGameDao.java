@@ -9,11 +9,13 @@ import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import com.google.gson.Gson;
 
 import server.User;
-import server.command.Command;
+import server.command.*;
 import shared.gameModel.GameModel;
 import dao.IGameDao;
 
@@ -36,19 +38,20 @@ public class OtherGameDao implements IGameDao {
 	public void addGame(GameModel game) {
 		File gamesDir = new File(gamesPath);
 		if (gamesDir.exists()) {
-		try {
-			Files.write(
-					Paths.get(gamesPath + File.separator + "Game"
-							+ game.getGameID()+".txt"), (g.toJson(game)+"\r").getBytes(),
-					StandardOpenOption.CREATE);
-			System.out.println("Wrote game "+game.getGameID()+" to file "+"Game"
-							+ game.getGameID()+".txt");
-		} catch (IOException e) {
-			System.out.println("Failed to write game to file.");
-			e.printStackTrace();
-		}
+			try {
+				Files.write(
+						Paths.get(gamesPath + File.separator + "Game"
+								+ game.getGameID() + ".txt"),
+						(g.toJson(game) + "\r").getBytes(),
+						StandardOpenOption.CREATE);
+				System.out.println("Wrote game " + game.getGameID()
+						+ " to file " + "Game" + game.getGameID() + ".txt");
+			} catch (IOException e) {
+				System.out.println("Failed to write game to file.");
+				e.printStackTrace();
+			}
 		} else {
-			System.out.println("Directory "+gamesPath+" doesn't exist.");
+			System.out.println("Directory " + gamesPath + " doesn't exist.");
 		}
 		game.setPrimaryKey(game.getGameID());
 	}
@@ -62,7 +65,8 @@ public class OtherGameDao implements IGameDao {
 	public List<GameModel> getAllGames() {
 		ArrayList<GameModel> gamesList = new ArrayList<GameModel>();
 		int gameID = 0;
-		File gameFile = new File(gamesPath + File.separator + "Game" + gameID+".txt");
+		File gameFile = new File(gamesPath + File.separator + "Game" + gameID
+				+ ".txt");
 		while (gameFile.exists()) {
 			Scanner gameScan;
 			String gameStr = "";
@@ -76,7 +80,8 @@ public class OtherGameDao implements IGameDao {
 			}
 			gamesList.add(g.fromJson(gameStr, GameModel.class));
 			gameID++;
-			gameFile = new File(gamesPath + File.separator + "Game" + gameID+".txt");
+			gameFile = new File(gamesPath + File.separator + "Game" + gameID
+					+ ".txt");
 		}
 		return gamesList;
 	}
@@ -86,23 +91,24 @@ public class OtherGameDao implements IGameDao {
 		try {
 			Files.write(
 					Paths.get(gamesPath + File.separator + "Game"
-							+ game.getGameID()+".txt"), (g.toJson(game)).getBytes(),
-					StandardOpenOption.CREATE);
+							+ game.getGameID() + ".txt"),
+					(g.toJson(game)).getBytes(), StandardOpenOption.CREATE);
 		} catch (IOException e) {
 			System.out.println("Failed to update game on file.");
 			e.printStackTrace();
 		}
 	}
 
-	@Override  //Function not used
+	@Override
+	// Function not used
 	public void removeGame(int gameID) {
-		
 
 	}
 
 	@Override
 	public void addCommand(Command command, int gameID) {
-		String commandFileStr = commandsPath + File.separator + "Commands" +gameID+".txt";
+		String commandFileStr = commandsPath + File.separator + "Commands"
+				+ gameID + ".txt";
 		try {
 			File commandsFile = new File(commandFileStr);
 			if (!commandsFile.exists()) {
@@ -120,24 +126,83 @@ public class OtherGameDao implements IGameDao {
 		}
 	}
 
+	public Command convertIntoCommand(String commandJson) {
+		Matcher classMatch = Pattern.compile("\"className\":\"[a-zA-Z]+\"")
+				.matcher(commandJson);
+		String className = "";
+		if (classMatch.find()) {
+			className = classMatch.group();
+		}
+//		System.out.println("className: " + className);
+//		System.out.println("case: "
+//				+ "\"className\":\"BuildSettlementCommand\"");
+		if (className.equals("\"className\":\"AcceptTradeCommand\"")) {
+			return g.fromJson(commandJson, AcceptTradeCommand.class);
+		} else if (className.equals("\"className\":\"BuildCityCommand\"")) {
+			return g.fromJson(commandJson, BuildCityCommand.class);
+		} else if (className.equals("\"className\":\"BuildRoadCommand\"")) {
+			return g.fromJson(commandJson, BuildRoadCommand.class);
+		} else if (className.equals("\"className\":\"BuildSettlementCommand\"")) {
+			return g.fromJson(commandJson, BuildSettlementCommand.class);
+		} else if (className.equals("\"className\":\"BuyDevCardCommand\"")) {
+			return g.fromJson(commandJson, BuyDevCardCommand.class);
+		} else if (className.equals("\"className\":\"CreateGameCommand\"")) {
+			return g.fromJson(commandJson, CreateGameCommand.class);
+		} else if (className.equals("\"className\":\"DiscardCardsCommand\"")) {
+			return g.fromJson(commandJson, DiscardCardsCommand.class);
+		} else if (className.equals("\"className\":\"FinishTurnCommand\"")) {
+			return g.fromJson(commandJson, FinishTurnCommand.class);
+		} else if (className.equals("\"className\":\"JoinGameCommand\"")) {
+			return g.fromJson(commandJson, JoinGameCommand.class);
+		} else if (className.equals("\"className\":\"MaritimeTradeCommand\"")) {
+			return g.fromJson(commandJson, MaritimeTradeCommand.class);
+		} else if (className.equals("\"className\":\"MonopolyCommand\"")) {
+			return g.fromJson(commandJson, MonopolyCommand.class);
+		} else if (className.equals("\"className\":\"MonumentCommand\"")) {
+			return g.fromJson(commandJson, MonumentCommand.class);
+		} else if (className.equals("\"className\":\"OfferTradeCommand\"")) {
+			return g.fromJson(commandJson, OfferTradeCommand.class);
+		} else if (className.equals("\"className\":\"RoadBuildingCommand\"")) {
+			return g.fromJson(commandJson, RoadBuildingCommand.class);
+		} else if (className.equals("\"className\":\"RobPlayerCommand\"")) {
+			return g.fromJson(commandJson, RobPlayerCommand.class);
+		} else if (className.equals("\"className\":\"RollNumberCommand\"")) {
+			return g.fromJson(commandJson, RollNumberCommand.class);
+		} else if (className.equals("\"className\":\"SendChatCommand\"")) {
+			return g.fromJson(commandJson, SendChatCommand.class);
+		} else if (className.equals("\"className\":\"SoldierCommand\"")) {
+			return g.fromJson(commandJson, SoldierCommand.class);
+		} else if (className.equals("\"className\":\"YearOfPlentyCommand\"")) {
+			return g.fromJson(commandJson, YearOfPlentyCommand.class);
+		} else {
+			return new AcceptTradeCommand(0, false, null);
+		}
+
+	}
+
 	@Override
 	public List<Command> getCommands(int gameID) {
-		String commandFileStr = commandsPath + File.separator + "Commands" + gameID+".txt";
-		List <Command> commands = new ArrayList<>();
-			File commandsFile = new File(commandFileStr);
-			if (commandsFile.exists()) {
-				Scanner commandScan;
-				try {
-					commandScan = new Scanner(commandsFile);
-					while (commandScan.hasNextLine()) {
-						commands.add(g.fromJson(commandScan.nextLine(), Command.class));
+		String commandFileStr = commandsPath + File.separator + "Commands"
+				+ gameID + ".txt";
+		List<Command> commands = new ArrayList<>();
+		File commandsFile = new File(commandFileStr);
+		if (commandsFile.exists()) {
+			Scanner commandScan;
+			try {
+				commandScan = new Scanner(commandsFile);
+				while (commandScan.hasNextLine()) {
+					String line = commandScan.nextLine();
+					if (line.length()>1) {
+						commands.add(convertIntoCommand(line));
 					}
-				} catch (FileNotFoundException e) {
-					e.printStackTrace();
+					
 				}
-			} else {
-				System.out.println("No commands found for game "+gameID);
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
 			}
+		} else {
+			System.out.println("No commands found for game " + gameID);
+		}
 		return commands;
 	}
 

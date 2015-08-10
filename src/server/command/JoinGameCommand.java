@@ -19,6 +19,7 @@ public class JoinGameCommand implements Command, Serializable {
 	/**
 	 * 
 	 */
+	private String className = "JoinGameCommand";
 	private static final long serialVersionUID = 3540431475253346304L;
 	private CatanColor color;
 	private String username;

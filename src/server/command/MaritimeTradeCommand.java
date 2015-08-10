@@ -21,6 +21,7 @@ public class MaritimeTradeCommand implements Command, Serializable {
 	/**
 	 * 
 	 */
+	private String className = "MaritimeTradeCommand";
 	private static final long serialVersionUID = -678453708731838256L;
 	private int playerIndex; 
 	private int ratio;

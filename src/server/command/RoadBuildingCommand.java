@@ -22,6 +22,7 @@ public class RoadBuildingCommand implements Command, Serializable {
 	/**
 	 * 
 	 */
+	private String className = "RoadBuildingCommand";
 	private static final long serialVersionUID = -4460468594336446763L;
 	private int sender;
 	private EdgeLocation spot1;

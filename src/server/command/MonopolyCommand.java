@@ -18,6 +18,7 @@ public class MonopolyCommand implements Command, Serializable {
 	/**
 	 * 
 	 */
+	private String className = "MonopolyCommand";
 	private static final long serialVersionUID = 891345239559347169L;
 	private int playerIndex;
 	private ResourceType resource;

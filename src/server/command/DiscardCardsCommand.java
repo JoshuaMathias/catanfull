@@ -21,6 +21,7 @@ public class DiscardCardsCommand implements Command, Serializable {
 	/**
 	 * 
 	 */
+	private String className = "DiscardCardsCommand";
 	private static final long serialVersionUID = -6370485199845730789L;
 	private int playerIndex;
 	private ResourceList discardedCards;

@@ -21,6 +21,7 @@ public class OfferTradeCommand implements Command, Serializable {
 	/**
 	 * 
 	 */
+	private String className = "OfferTradeCommand";
 	private static final long serialVersionUID = -3880103328620981406L;
 	int sender;
 	ResourceList offer;

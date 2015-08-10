@@ -27,6 +27,7 @@ public class RollNumberCommand implements Command, Serializable {
 	/**
 	 * 
 	 */
+	private String className = "RollNumberCommand";
 	private static final long serialVersionUID = -1196063514032709023L;
 	private int sender;
 	private int number;
