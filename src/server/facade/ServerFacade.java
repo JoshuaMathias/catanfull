@@ -3,12 +3,6 @@ package server.facade;
 import java.util.ArrayList;
 import java.util.List;
 
-
-
-
-
-
-
 //import abstractFactory.DbAbstractFactory;
 import abstractFactory.IAbstractFactory;
 //import abstractFactory.OtherAbstractFactory;

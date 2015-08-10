@@ -28,12 +28,14 @@ public class AcceptTradeCommand implements Command, Serializable{
 	private boolean willAccept;
 	private transient GameModel serverModel;
 	private int gameID;
+	private TradeOffer tradeOffer;
 	
 	public AcceptTradeCommand(int playerIndex, boolean willAccept, GameModel serverModel){
 		this.playerIndex = playerIndex;
 		this.willAccept = willAccept;
 		this.serverModel = serverModel;
 		this.gameID = serverModel.getGameID();
+		this.tradeOffer = serverModel.getTradeOffer();
 	}
 	
 	@Override
@@ -47,7 +49,7 @@ public class AcceptTradeCommand implements Command, Serializable{
 		}
 		
 		if (willAccept){
-			TradeOffer tradeOffer = serverModel.getTradeOffer();
+//			TradeOffer tradeOffer = serverModel.getTradeOffer();
 			ResourceList offerList = tradeOffer.getOffer();
 			
 			ArrayList<Player> players = serverModel.getPlayers();
