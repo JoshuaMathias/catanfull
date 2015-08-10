@@ -97,6 +97,7 @@ public class OtherGameDao implements IGameDao {
 			System.out.println("Failed to update game on file.");
 			e.printStackTrace();
 		}
+		removeCommands(game.getGameID());
 	}
 
 	@Override
@@ -124,8 +125,9 @@ public class OtherGameDao implements IGameDao {
 			System.out.println("Failed to write command to file.");
 			e.printStackTrace();
 		}
+		
 	}
-
+//Use the className variable to know what concrete Command class to convert into.
 	public Command convertIntoCommand(String commandJson) {
 		Matcher classMatch = Pattern.compile("\"className\":\"[a-zA-Z]+\"")
 				.matcher(commandJson);
@@ -136,6 +138,7 @@ public class OtherGameDao implements IGameDao {
 //		System.out.println("className: " + className);
 //		System.out.println("case: "
 //				+ "\"className\":\"BuildSettlementCommand\"");
+		
 		if (className.equals("\"className\":\"AcceptTradeCommand\"")) {
 			return g.fromJson(commandJson, AcceptTradeCommand.class);
 		} else if (className.equals("\"className\":\"BuildCityCommand\"")) {
@@ -179,6 +182,11 @@ public class OtherGameDao implements IGameDao {
 		}
 
 	}
+	
+	private void removeCommands(int gameID) {
+		File commandFile = new File("persistent" + File.separator + "Commands" + File.separator + "Commands" + gameID+".txt");
+		commandFile.delete();
+	}
 
 	@Override
 	public List<Command> getCommands(int gameID) {
@@ -203,7 +211,9 @@ public class OtherGameDao implements IGameDao {
 		} else {
 			System.out.println("No commands found for game " + gameID);
 		}
+		removeCommands(gameID);
 		return commands;
 	}
-
+	
+	
 }
