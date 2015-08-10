@@ -59,20 +59,28 @@ public class Server {
 		return SERVER_PORT_NUMBER;
 	}
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) 
+	{
 		System.out.println("Started server");
-		if (args.length > 0 && args[0] != null) {
+		if (args.length > 0 && args[0] != null) 
+		{
 			SERVER_PORT_NUMBER = Integer.parseInt((args[0]));
-			if (args.length > 1 && args[1] != null) {
-				if (args[1].equals("test")) {
+			if (args.length > 1 && args[1] != null) 
+			{
+				if (args[1].equals("test"))
+				{
 					UserHandler.test=true;
 					GameHandler.test=true;
 					GamesHandler.test=true;
 					MovesHandler.test=true;
-					if (args.length > 2 && args[2] != null) {
+					
+					if (args.length > 2 && args[2] != null) 
+					{
 						ServerFacade.storageType=args[2];
 					}
-				} else {
+				} 
+				else 
+				{
 					ServerFacade.storageType=args[1].toLowerCase();
 				}
 			}
