@@ -1,5 +1,6 @@
 package server.command;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import Testing.Proxy.ServerFacadeTest;
@@ -21,8 +22,12 @@ import shared.locations.VertexLocation;
  * @author Ife's Group
  *
  */
-public class RollNumberCommand implements Command {
+public class RollNumberCommand implements Command, Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1196063514032709023L;
 	private int sender;
 	private int number;
 	private transient GameModel serverModel;
