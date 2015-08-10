@@ -21,6 +21,7 @@ public class SoldierCommand implements Command, Serializable {
 	/**
 	 * 
 	 */
+	private String className = "SoldierCommand";
 	private static final long serialVersionUID = -1002301330706263584L;
 	int playerIndex;
 	int victimIndex;

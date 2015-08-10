@@ -24,6 +24,7 @@ public class BuildCityCommand implements Command, Serializable {
 	/**
 	 * 
 	 */
+	private String className = "BuildCityCommand";
 	private static final long serialVersionUID = -275579207207116950L;
 	private int playerIndex;
 	private VertexLocation vertexLocation;

@@ -33,6 +33,7 @@ public class CreateGameCommand implements Command, Serializable {
 	/**
 	 * 
 	 */
+	private String className = "CreateGameCommand";
 	private static final long serialVersionUID = -1764798123223433364L;
 	private IServerFacade serverFacade;
 	private boolean randomTiles;

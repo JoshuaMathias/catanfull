@@ -20,6 +20,7 @@ public class MonumentCommand implements Command, Serializable {
 	/**
 	 * 
 	 */
+	private String className = "MonumentCommand";
 	private static final long serialVersionUID = -8419614526957462622L;
 	private Player player;
 	private transient GameModel serverModel;

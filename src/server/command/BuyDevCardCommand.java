@@ -26,6 +26,7 @@ public class BuyDevCardCommand implements Command, Serializable {
 	/**
 	 * 
 	 */
+	private String className = "BuyDevCardCommand";
 	private static final long serialVersionUID = 7066799747480305706L;
 	int playerIndex;
 	transient GameModel serverModel;

@@ -22,6 +22,7 @@ public class FinishTurnCommand implements Command, Serializable {
 	/**
 	 * 
 	 */
+	private String className = "FinishTurnCommand";
 	private static final long serialVersionUID = 8888817633160407013L;
 	private transient GameModel serverModel;
 	private int gameID;

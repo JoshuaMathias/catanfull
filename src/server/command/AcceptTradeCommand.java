@@ -22,6 +22,7 @@ public class AcceptTradeCommand implements Command, Serializable{
 	/**
 	 * 
 	 */
+	private String className = "AcceptTradeCommand";
 	private static final long serialVersionUID = 4777851003074432445L;
 	private int playerIndex;
 	private boolean willAccept;

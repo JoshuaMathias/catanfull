@@ -29,6 +29,7 @@ public class BuildSettlementCommand implements Command, Serializable {
 	/**
 	 * 
 	 */
+	private String className = "BuildSettlementCommand";
 	private static final long serialVersionUID = -7384342653722445582L;
 	int playerIndex;
 	VertexLocation vertexLocation;

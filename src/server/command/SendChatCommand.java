@@ -21,6 +21,7 @@ public class SendChatCommand implements Command, Serializable {
 	/**
 	 * 
 	 */
+	private String className = "SendChatCommand";
 	private static final long serialVersionUID = -8149568725648502070L;
 	private transient GameModel serverModel;
 	private String message;
